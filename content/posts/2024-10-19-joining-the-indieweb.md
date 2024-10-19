@@ -13,7 +13,7 @@ I've been watching the [IndieWeb](https://indieweb.org/) develop for some time n
 
 I like the idea of seeing a more distributed, less centralised web develop where people own the content that they create, and control their own space on the web.
 
-Similarly, I've been a fan of using RSS feeds to follow stuff I'm interested in for about as long as I've been using the internet. I've often wondered if we'd have a slightly more decentralised web today if it weren't for the death of Google Reader all those years ago. Either way, you can enjoy this blog in a nice decentralised way by [grabbing the RSS feed here](/index.xml).
+Similarly, I've been a fan of using RSS feeds to follow stuff I'm interested in for about as long as I've been using the internet. I've often wondered if we'd have a slightly more decentralised web today if it weren't for the death of Google Reader all those years ago. Either way, you can enjoy this blog in a nice decentralised way by [grabbing the RSS feed here](/posts/index.xml).
 
 ### Hugo & smol
 I'm writing this blog using [Hugo](https://gohugo.io/), a great open source static site generator. It's based on the very nice [smol](https://github.com/colorchestra/smol) theme.

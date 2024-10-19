@@ -10,6 +10,14 @@ theme = 'smol'
     # this string seems to give us RFC 3339 / ISO-8601 YYYY-MM-DD dates correctly so I'll just accept it
     dateFmt = "2006-01-02 15:04"
 
+# Disable RSS output format for all page kinds in global config
+# (we re-enable it just for blog posts so we don't include every page in the feed)
+[outputs]
+home = ['html']
+section = ['html']
+taxonomy = ['html']
+term = ['html']
+
 # Header
 [menu]
   [[menu.main]]
@@ -55,5 +63,5 @@ theme = 'smol'
 
     [[menu.footer]]
         name = "RSS Feed"
-        url = "/index.xml"
+        url = "/posts/index.xml"
         weight = 3
