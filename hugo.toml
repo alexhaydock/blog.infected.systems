@@ -1,4 +1,59 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
+baseURL = 'https://blog.infected.systems/'
+languageCode = 'en-gb'
+title = 'Alex Haydock'
 theme = 'smol'
+
+# Parameters
+[params]
+    subtitle = "Your blog subtitle goes here!"
+    # I have no idea why Hugo declares the date format this way using a specific example date, but
+    # this string seems to give us RFC 3339 / ISO-8601 YYYY-MM-DD dates correctly so I'll just accept it
+    dateFmt = "2006-01-02 15:04"
+
+# Header
+[menu]
+  [[menu.main]]
+        identifier = "posts"
+        name = "Posts"
+        url = "/posts/"
+        weight = 1
+
+#  [[menu.main]]
+#        identifier = "categories"
+#        name = "Categories"
+#        url = "/categories/"
+#        weight = 2
+#
+#  [[menu.main]]
+#        identifier = "tags"
+#        name = "Tags"
+#        url = "/tags/"
+#        weight = 3
+
+  [[menu.main]]
+        identifier = "blogroll"
+        name = "Blogroll"
+        url = "/blogroll/"
+        weight = 3
+
+  [[menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about/"
+        weight = 4
+
+# Footer
+  [[menu.footer]]
+        name = "GitHub"
+        url = "https://github.com/alexhaydock"
+        weight = 1
+
+    [[menu.footer]]
+        name = "Mastodon"
+        url = "https://infosec.exchange/@alexhaydock"
+        weight = 2
+
+    [[menu.footer]]
+        name = "RSS Feed"
+        url = "/index.xml"
+        weight = 3
