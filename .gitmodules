@@ -1,6 +1,3 @@
-[submodule "themes/smol"]
-	path = themes/smol
-	url = git@github.com:colorchestra/smol.git
 [submodule "themes/smol-bean"]
 	path = themes/smol-bean
 	url = git@github.com:alexhaydock/smol-bean.git
