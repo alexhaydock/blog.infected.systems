@@ -5,7 +5,8 @@ theme = 'smol-bean'
 
 # Parameters
 [params]
-    subtitle = "Your blog subtitle goes here!"
+    # Disabled subtitle since this never quite looked right on mobile with my theme anyway
+    #subtitle = "Your blog subtitle goes here!"
     # I have no idea why Hugo declares the date format this way using a specific example date, but
     # this string seems to give us RFC 3339 / ISO-8601 YYYY-MM-DD dates correctly so I'll just accept it
     dateFmt = "2006-01-02 15:04"
