@@ -1,7 +1,7 @@
 baseURL = 'https://blog.infected.systems/'
 languageCode = 'en-gb'
 title = 'Alex Haydock'
-theme = 'smol'
+theme = 'smol-bean'
 
 # Parameters
 [params]
