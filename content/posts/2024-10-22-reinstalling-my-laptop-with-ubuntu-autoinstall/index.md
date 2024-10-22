@@ -52,7 +52,7 @@ That might not be the cleanest way of achieving the autoinstall goal, but even t
 The new functionality of being able to type the YAML URL directly into the installer is one I'm definitely appreciating.
 
 ### New hotness
-Rather than spend a while repeating what the documentation at you in small chunks, this is the (entire) working file that I used to install this T480. It installs using encrypted root-on-ZFS, with a bunch of packages and Snaps and some minor other configuration configuration.
+Rather than spend a while repeating what the documentation at you in small chunks, this is the (entire) working file that I used to install this ThinkPad T480. It installs using encrypted root-on-ZFS, with a bunch of packages and Snaps and some minor other configuration configuration.
 
 Hopefully it serves as a useful starting point to configure further.
 
