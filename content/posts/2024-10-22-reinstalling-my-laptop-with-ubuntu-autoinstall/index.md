@@ -21,7 +21,7 @@ I don't think this is something that the documentation makes adequately clear an
 
 ### Why?
 #### Reproducibility
-It's nice to have a system config that's reproducible. This might be a bit less important when it comes to a desktop system, compared to installing hundreds of identical VMs or servers for a distributed deployment, but it's still nice.
+It's nice to have a system config that's reproducible. This might be a bit less important when it comes to a desktop system -- compared to installing hundreds of identical VMs or servers for a distributed deployment -- but it's still nice.
 
 #### Declarative(ish) system config
 Having a declarative config allows for the predictable state of the system after install. I use a lot of systems and, wherever possible, I try and manage them as code. After install, I manage any non-atomic* Linux distributions through their lifecycle using Ansible, which ends up being my documentation for how the system is configured. It's nice to be able to extend that notion of code-as-documentation to the initial state of the system, so I can always reference the code that originally produced a system to learn more about it.
@@ -29,7 +29,7 @@ Having a declarative config allows for the predictable state of the system after
 *Atomic distributions are a whole different rabbit hole of their own, and one which I _thoroughly_ expect to explore on here at some point.
 
 #### Cloud-native approach
-It might not be `cloud-init`, but the concepts behind seeding an installer with a declarative idea of what you want the state a system to be after install is definitely leaning into a lot of the same concepts.
+It might not _quite_ be `cloud-init`, but the concepts behind seeding an installer with a declarative idea of what you want the state of a system to be after install is definitely going to be pretty familiar to anyone who has done any cloud admin in recent years, and it's nice to have that consistency between environments.
 
 ### Old and busted
 In order to appreciate the user-friendliness of what Canonical has bestowed upon us here, I present this snippet from a [Hashicorp Packer](https://www.packer.io/) file that I've used in the past to help build Ubuntu Desktop VMs for development usage:
@@ -52,7 +52,7 @@ That might not be the cleanest way of achieving the autoinstall goal, but even t
 The new functionality of being able to type the YAML URL directly into the installer is one I'm definitely appreciating.
 
 ### New hotness
-Rather than spend a while repeating what the documentation at you in small chunks, this is the (entire) working file that I used to install this ThinkPad T480. It installs using encrypted root-on-ZFS, with a bunch of packages and Snaps and some minor other configuration configuration.
+Rather than spend a while repeating the documentation at you in small chunks, this is the (entire) working file that I used to install this ThinkPad T480. It installs using encrypted root-on-ZFS, with a bunch of packages and Snaps and some minor other configuration.
 
 Hopefully it serves as a useful starting point to configure further.
 
