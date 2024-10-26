@@ -61,6 +61,11 @@ term = ['html']
         weight = 2
 
     [[menu.footer]]
-        name = "RSS Feed"
-        url = "/posts/index.xml"
+        name = ".onion"
+        url = "http://infected2ffce6vfaeuah77ooambvlj7ne7roujuvpqvb54ha5wbjnad.onion"
         weight = 3
+
+    [[menu.footer]]
+        name = "RSS"
+        url = "/posts/index.xml"
+        weight = 4
