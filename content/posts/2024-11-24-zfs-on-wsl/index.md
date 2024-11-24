@@ -25,7 +25,7 @@ Unfortunately, this doesn't work for WSL. As it turns out, the `zfsutils-linux` 
 
 On Debian systems, these modules get built on the end user machine automatically [by the `zfs-dkms` package](https://packages.debian.org/bookworm/zfs-dkms). In Ubuntu things are sightly different. Canonical build the modules themselves in their build infrastructure and ship them with kernel updates directly. This allows them to do things like sign the kernel image for Secure Boot _after_ the ZFS modules are included. From what I can tell, Canonical's modules get built form the same `zfs-dkms` code, as you can [see where they include it in their kernel build here](https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/noble/tree/debian/scripts/dkms-build-configure--zfs).
 
-Unfortunately for us, when we install the default Ubuntu distribution inside WSL, it doesn't use Canonical's kernel, it uses [a Microsoft one, tailored specifically for WSL](https://github.com/microsoft/WSL2-Linux-Kernel).
+Unfortunately for us, when we install the default Ubuntu distribution inside WSL, it doesn't use Canonical's kernel, it uses [a Microsoft one, tailored specifically for WSL](https://github.com/microsoft/WSL2-Linux-Kernel). So no ZFS modules for us.
 
 ### Solution
 Overall, the solution to this ends up being relatively simple. WSL2 allows us to specify a path to a custom-built kernel using the `.wslconfig` file. With that in mind, we can pull the sources from the Microsoft WSL2 kernel repo above, rebuild them with OpenZFS support statically baked-in, and then reconfigure WSL to use our new custom kernel.
