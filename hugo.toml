@@ -17,6 +17,12 @@ section = ['html']
 taxonomy = ['html']
 term = ['html']
 
+# Ensure that Hugo doesn't try to use inline CSS for our syntax highlighting.
+# (We've got that covered manually in our theme's CSS)
+[markup]
+  [markup.highlight]
+    noClasses = false
+
 # Header
 [menu]
   [[menu.main]]
