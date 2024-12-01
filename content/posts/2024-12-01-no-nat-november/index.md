@@ -205,7 +205,7 @@ But it's quite striking that we're a long long way from the "everything is broke
 
 But we're still left in one of two non-ideal situations:
 * Waiting for our OS vendor to implement a CLAT; or
-* Complaining about individual apps still relying on IPv4, on GitHub issues which are [sometimes over 10 years old](https://github.com/systemd/systemd/issues/23674).
+* Complaining about individual apps still relying on IPv4, on GitHub issues which are [sometimes over 10 years old](https://github.com/ValveSoftware/steam-for-linux/issues/3372).
 
 Neither of these are particularly great options. But there is an alternative.
 
