@@ -254,7 +254,7 @@ With IPv6-mostly, we can build a clear pathway to transition all the way from an
 ![Flow diagram showing a pathway from IPv4-only networking to IPv6-only with a transitional IPv6-mostly phase in the middle](Mermaid3.png)
 
 ## Potential follow-ups
-In this post, I've focused quite specifically on home networks, and on desktop/mobile devices. That was pretty necessary to avoid the post becoming even longer than it already was. There's a lot to be said in the server space for this too. Broadly, I found that applications deployed directly IPv6-only servers suffer largely the same pitfalls and successes as the desktop ones listed above.
+In this post, I've focused quite specifically on home networks, and on desktop/mobile devices. That was pretty necessary to avoid the post becoming even longer than it already was. There's a lot to be said in the server space for this too. Broadly, I found that applications deployed directly onto IPv6-only servers suffer largely the same pitfalls and successes as the desktop ones listed above.
 
 The one big caveat there is that containerisation and virtualisation technologies seem to all handle this situation in quirky and interesting ways. That could (and probably will) justify a post in itself at some point in the future. Docker, Podman, WSL, QEMU - your mileage may certainly vary when trying any of the above on an IPv6-only network. If you do try it, I'd be interested to see what your conclusions and experiences are.
 
