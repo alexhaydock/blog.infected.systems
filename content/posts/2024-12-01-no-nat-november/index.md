@@ -138,7 +138,7 @@ To solve this problem, we can use a CLAT.
 
 A CLAT is an extra layer that an IPv6-only device can implement which will allow it to translate IPv4 packets to IPv6 packets on the fly. This is done using much the same mechanism as DNS64. The packets get rewritten into IPv6 packets with a prefix matching the NAT64 gateway address, and with a suffix matching the encoded IPv4 address of the destination host.
 
-[The RFCs](https://www.rfc-editor.org/rfc/rfc6877) suggest that CLAT stands for _Customer-side Translator_ but that doesn't seem to fit so well, so I prefer to read it as 'Client-Layer Address Translator' as it keeps it straight in my own head where the translation is actually happening the flow.
+[The RFCs](https://www.rfc-editor.org/rfc/rfc6877) suggest that CLAT stands for _Customer-side Translator_ but that doesn't seem to fit so well, so I prefer to read it as 'Client-Layer Address Translator' as it keeps it straight in my own head where in the flow the translation is actually happening.
 
 The way this works is that a compatible host will set up the local IPv4 stack of the device to use a 'fake' gateway and client IP. Here's an example of what this looks like on iOS:
 
