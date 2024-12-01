@@ -258,7 +258,7 @@ In this post, I've focused quite specifically on home networks, and on desktop/m
 
 The one big caveat there is that containerisation and virtualisation technologies seem to all handle this situation in quirky and interesting ways. That could (and probably will) justify a post in itself at some point in the future. Docker, Podman, WSL, QEMU - your mileage may certainly vary when trying any of the above on an IPv6-only network. If you do try it, I'd be interested to see what your conclusions and experiences are.
 
-As part of this experimentation, I ended up deploying a full OpenBSD home router setup to create an IPv6-mostly network which implements all of the relevant RFCs (including NAT64, DNS64, PREF64 and Op108). I noticed while putting the config together that a lot of OpenBSD router config guides online focus very heavily on IPv4 networking and leave out most if not all of this kind of functionality. At some point I'll pull it all together and publish it as a guide as it might be useful to the community at large.
+As part of this experimentation, I ended up deploying a full OpenBSD home router setup to create an IPv6-mostly network which implements all of the relevant RFCs (including NAT64, DNS64, PREF64 and Op108). I noticed while putting the config together that a lot of OpenBSD router config guides online focus very heavily on IPv4 networking and leave out most, if not all, of this kind of functionality. At some point I'll pull it all together and publish it as a guide as it might be useful to the community at large.
 
 ## Day 30+: Conclusions and recommendations for the future
 Considering everything from my experience so far, I've come away with a few general recommendations:
