@@ -9,7 +9,7 @@ Near the beginning of November, nixCraft posted this challenge on Mastodon, dari
 
 ![nixCraft's No NAT November challenge post on Mastodon](ChallengeAccepted.png)
 
-With the challenge presented, I couldn't resist.
+With the challenge laid out like that, I couldn't resist.
 
 ## Conclusions
 I know this is quite a long and technical post, so I figured it makes sense to put a conclusion about my experience near the beginning.
@@ -27,26 +27,26 @@ The key point here is that the 'default' IPv6 capable end-user network is a dual
 
 I know some network administrators use this increased maintenance burden as a reason to justify not having to learn or deploy IPv6 in the first place, but what if we used it as a reason to disable IPv4 instead?
 
-And since there's no faster way to learn the downsides of something than simply just doing it, so began my journey of spending November on a single-stack v6-only network.
+And since there's no faster way to learn the downsides of something than simply just doing it, so began my journey of spending November on a single-stack IPv6-only network.
 
 ## Scope
 So throughout the month of November, I decided that I would disable IPv4 connectivity on my main home network and see what broke, and whether there were any steps I could take to work around the breakage or fix it.
 
-Throughout the process, I wanted to follow an iterative approach. I would first take the network back to pure v6-only, without even any transitional technologies in place. And then I would add in the transitional technologies until I determined whether I could live without v4 connectivity long-term.
+Throughout the process, I wanted to follow an iterative approach. I would first take the network back to pure IPv6-only, without even any transitional technologies in place. And then I would add in the transitional technologies until I determined whether I could live without IPv4 connectivity long-term.
 
-Please note that throughout this post I'm really **only focusing on the challenges of going v6-only from a home networking standpoint**, rather than anything at an enterprise or carrier level. Though you may be interested to note from the enterprise standpoint that [Microsoft were transitioning their corporate network to be IPv6-only as early as 2017](https://labs.ripe.net/author/mirjam/ipv6-only-at-microsoft/). And from the carrier standpoint, Sky appear to be [actively working on IPv6-only deployments for their UK home broadband customers](https://www.ipv6.org.uk/wp-content/uploads/2024/10/02_Sky-UK-MAP-T-UK-IPv6-Council-Nov2024.pdf).
+Please note that throughout this post I'm really **only focusing on the challenges of going IPv6-only from a home networking standpoint**, rather than anything at an enterprise or carrier level. Though you may be interested to note from the enterprise standpoint that [Microsoft were transitioning their corporate network to be IPv6-only as early as 2017](https://labs.ripe.net/author/mirjam/ipv6-only-at-microsoft/). And from the carrier standpoint, Sky appear to be [actively working on IPv6-only deployments for their UK home broadband customers](https://www.ipv6.org.uk/wp-content/uploads/2024/10/02_Sky-UK-MAP-T-UK-IPv6-Council-Nov2024.pdf).
 
 ## Day 1: Pure IPv6-only (without transitional tech)
-For this first stage, I simulated going v6-only by disabling the DHCPv4 server on my router.
+For this first stage, I simulated going IPv6-only by disabling the DHCPv4 server on my router.
 
 So... what broke?
 
 Well - unfortunately quite a lot. Including some real showstoppers.
 
 ### Desktop OS support
-At a platform level, every desktop operating system I tried offered seamless support for operating on a v6-only network. I was a little surprised actually, since when I've tried this in the past, I've seen operating systems report a lack of v4 as if the network was suffering problems or was unconnectable.
+At a platform level, every desktop operating system I tried offered seamless support for operating on an IPv6-only network. I was a little surprised actually, since when I've tried this in the past, I've seen operating systems report a lack of IPv4 as if the network was suffering problems or was unconnectable.
 
-I was pleasantly surprised to see all my devices, across macOS Sequoia, Win 11, Ubuntu 24.04, and Fedora 41 seamlessly accepting without any protest that my network had no v4 connectivity, all dutifully setting up the connection with single-stack v6.
+I was pleasantly surprised to see all my devices, across macOS Sequoia, Win 11, Ubuntu 24.04, and Fedora 41 seamlessly accepting without any protest that my network had no IPv4 connectivity, all dutifully setting up the connection with single-stack IPv6.
 
 ### Mobile OS support
 The only devices I have in this category are iOS devices and they handled the situation similarly flawlessly.
@@ -60,7 +60,7 @@ I tried a Nintendo Switch and it completely refused to connect to the network wi
 
 That didn't surprise me hugely, as Nintendo have historically lagged behind a bit in terms of networking capabilities, but what did disappoint me quite a bit was the way the Steam Deck behaves.
 
-As a Linux-based device with a recent kernel and a full desktop environment available, I had quite hoped the Steam Deck would act much like my other desktop devices. Unfortunately it's even more frustrating than the Switch, because it actually does set up a full IPv6 stack - and even shows the IP in the network connection settings menu - but overall it seems to decide that the lack of IPv4 connectivity means the network isn't working and it eventually fails altogether:
+As a Linux-based device with a recent kernel and a full desktop environment available, I had quite hoped the Steam Deck would act much like my other desktop devices. Unfortunately it's even more frustrating than the Switch, because it actually does set up a full IPv6 stack - and even shows the IP in the network connection settings menu - but overall it seems to decide that the lack of IPv4 connectivity means the network isn't working. It just gets stuck 'Connecting' for a while, before eventually failing altogether:
 
 ![Screenshot of a Steam Deck network settings page, showing it having retrieved an IPv6 address but still failing to connect](DeckDisappointment.jpg)
 
@@ -72,9 +72,9 @@ Most of my network is made up of TP-Link access points [like this one](https://w
 
 Unfortunately, as seems to be a common theme with home networking gear, the management interface configurability is a bit lacking and restricted to IPv4 only:
 
-![TP-Link switch interface showing the ability to only configure the switch for v4 and not v6](v4OnlySwitchMGMT.png)
+![TP-Link switch interface showing the ability to only configure the switch for IPv4 and not IPv6](v4OnlySwitchMGMT.png)
 
-This isn't particularly a huge problem since I put these management interfaces on a dedicated network anyway for security reasons. But it's one that I thought would be useful to call out, since it might affect you if you're trying to opt for a simpler network design. Being unable to manage any of your switches or access points once you remove the v4 addresses from your clients could be a real pain.
+This isn't particularly a huge problem since I put these management interfaces on a dedicated network anyway for security reasons. But it's one that I thought would be useful to call out, since it might affect you if you're trying to opt for a simpler network design. Being unable to manage any of your switches or access points once you remove the IPv4 addresses from your clients could be a real pain.
 
 ### Web service support
 Well... this is where things really fall down.
@@ -98,7 +98,7 @@ Broadly, DNS64 works like this:
 
 ![Diagram showing the flow of DNS64](Mermaid1.png)
 
-What's happening here is that our IPv6 device makes DNS requests as normal, but to a DNS server which is running in DNS64 mode. In this mode, the server will detect when a response contains A records but no AAAA records and will 'synthesise' new AAAA records for sites in this category.
+What's happening here is that our IPv6 device makes DNS requests as normal, but to a DNS server which is running in DNS64 mode. This is effectively a normal DNS server speaking the regular DNS protocol, but when in this mode, the server will detect when a domain has only A records and no AAAA records, and will synthesise 'fake' AAAA records for sites in this category.
 
 The synthetic AAAA records sent back by the DNS64 server make use of the fact that the entire IPv4 internet can fit into an IPv6 block which is only `/96` wide. So they're comprised of a prefix, which points to a NAT64 Gateway (also called a PLAT), and a suffix, which is just an encoded version of the IPv4 address.
 
@@ -112,9 +112,9 @@ Where `64:ff9b::` is the well-known prefix used by many NAT64 implementations, a
 
 As a random note - If you're interested in decoding a NAT64 mapped address back to the IPv4 literal address it represents, there's a [useful tool here](https://www.whatsmydns.net/ipv6-to-ipv4?q=%3A%3Affff%3A141a%3A9cd7) that can do it if you replace the NAT64 prefix with `::ffff:`. I'll leave the details of why that works for another day, and there's probably many other ways of doing this, but this has been useful to me in the past.
 
-Once we have our encoded AAAA record in our DNS response, our host can act as normal, sending packets to the IPv6 address as if it were the regular unmodified response from the host. Those packets will be routed to the NAT64 gateway which will listen for packets targeting the entire NAT64 prefix (in our case, the whole of `64:ff9b::/96`). When it receives these packets, it will decode the suffix to understand the intended destination IPv4 address and forward the packet accordingly.
+Once we have our encoded AAAA record in our DNS response, our host can act as normal, sending packets to the IPv6 address as if it were the regular unmodified response from the host. Those packets will be routed to the NAT64 gateway which will listen for packets targeting the entire NAT64 prefix (in our case, the whole of `64:ff9b::/96`). When it receives a packet like this, it will use the encoded suffix to decode the IPv4 address the packet is intended for, and will forward it accordingly.
 
-Through this process, we're able to get rid of any requirement for IPv4 connectivity anywhere prior to the NAT64 gateway. In terms of our challenge, this allows us to stay IPv4 free on our LAN entirely, and delegate all v4 requirements to our NAT64 gateway.
+Through this process, we're able to get rid of any requirement for IPv4 connectivity anywhere prior to the NAT64 gateway. In terms of our challenge, this allows us to stay IPv4 free on our LAN entirely, and delegate all remaining IPv4 requirements to our NAT64 gateway.
 
 ### Wait, NAT64? Isn't that cheating?
 At this point, a few of you have probably already objected on the basis that this post is titled 'No NAT November' and I'm busy describing deploying something called **NAT**64 on only the second day of the challenge.
@@ -136,7 +136,7 @@ Since DNS64 is based around, well... DNS, it can't help us in situations where w
 
 To solve this problem, we can use a CLAT.
 
-A CLAT is an extra layer that an IPv6-only device can implement which will allow it to translate IPv4 packets to IPv6 packets on the fly. This is done using much the same mechanism as DNS64. The packets get rewritten into v6 packets, destined for the NAT64 gateway prefix, with a suffix matching the encoded IPv4 address of the destination host.
+A CLAT is an extra layer that an IPv6-only device can implement which will allow it to translate IPv4 packets to IPv6 packets on the fly. This is done using much the same mechanism as DNS64. The packets get rewritten into IPv6 packets with a prefix matching the NAT64 gateway address, and with a suffix matching the encoded IPv4 address of the destination host.
 
 [The RFCs](https://www.rfc-editor.org/rfc/rfc6877) suggest that CLAT stands for _Customer-side Translator_ but that doesn't seem to fit so well, so I prefer to read it as 'Client-Layer Address Translator' as it keeps it straight in my own head where the translation is actually happening the flow.
 
@@ -148,7 +148,7 @@ What's going on here is that the 'Router' represents the fake CLAT gateway, whic
 
 This allows the device to act like it has a fully normal and functional IPv4 stack, while transparently translating packets in the background to be able to handle an IPv6-only transit layer.
 
-That looks like this:
+That looks like this and, as you can see, the end result is that we only have IPv6 packets leaving and returning to the device, allowing us to operate quite happily on an IPv6-only network segment:
 
 ![Diagram showing how NAT64 works with a CLAT on the client device](Mermaid2.png)
 
@@ -178,9 +178,9 @@ Sadly, the same cannot be said about Windows. Although as of March 2024, [Micros
 #### Linux
 In the CLAT space, Linux is... interesting. [clatd](https://github.com/toreanderson/clatd) exists and does see some maintenance, though the only distributions that seem to package it are [Fedora and openSUSE](https://pkgs.org/search/?q=clatd), and neither ship it by default.
 
-I've had mixed results using `clatd`. It's a touch finnicky and seems to get a bit confused when carrying out very regular tasks such as switching between ethernet and Wi-Fi when docking/undocking a laptop, for example.
+I've had mixed results using `clatd`. It's a touch finnicky and seems to get a bit confused when carrying out very regular tasks, such as switching between ethernet and Wi-Fi when docking/undocking a laptop.
 
-I'd like to see something emerge for Linux which is a bit more embedded into the core of the OS and functions a bit more smoothly, like Apple's implementation. There's been an issue open on [systemd's GitHub](https://github.com/systemd/systemd/issues/23674) for a couple of years now asking for something like this. Who knows, maybe we'll see something like a `systemd-clatd` eventually.
+I'd like to see something emerge for Linux which is a bit more embedded into the core of the OS and functions a bit more smoothly, like Apple's implementation. There's been an issue open on [systemd's GitHub](https://github.com/systemd/systemd/issues/23674) for a couple of years now asking for something like this. Who knows, maybe we'll see `systemd-clatd` eventually.
 
 ## Day 3 - 30: IPv6-only (with transitional tech)
 So by Day 3, I still have my IPv6-only network deployed, but I also have NAT64+DNS64 along with CLATs on devices which support them.
@@ -209,7 +209,7 @@ But we're still left in one of two non-ideal situations:
 
 Neither of these are particularly great options. But there is an alternative.
 
-As of 2020, there's a shining fix to our predicament available, in the form of IPv6-_mostly_. In order to understand where IPv6-mostly comes from, I can't avoid making this post even longer than it already is and relaying the story of its inception.
+As of 2020, there's a shining fix to our predicament available, in the form of IPv6-_mostly_. In order to understand where IPv6-mostly comes from, I can't avoid relaying the wonderful story of its inception, even though I know this post is already far too long.
 
 ## How to manage the unmanaged: orchestration by RFC
 How would you deal with deploying OS-level config to a fleet of devices?
@@ -245,7 +245,7 @@ Clients which support operating in IPv6-only mode and see a DHCPv4 server sendin
 With this, we create what's called an IPv6-_mostly_ network. Effectively the technological equivalent of having our cake and eating it. In this configuration, the network is dual-stacked, but clients will only take an IPv4 address if they _need_ one. This allows us to watch our DHCPv4 lease table tick down in size until the day finally comes when we can disable IPv4 entirely.
 
 ## IPv6-mostly - your road to single-stack-success
-IPv6-mostly networks really end up being the best of all worlds. I would revisit the table from the prior section and compare an IPv6-only+464XLAT setup with an IPv6-mostly setup, but the truth of the matter is that on IPv6-mostly I haven't experienced anything that breaks at all.
+IPv6-mostly networks really end up being the best of all worlds. I would revisit the table from the prior section and compare an IPv6-only+464XLAT setup with an IPv6-mostly setup, but the truth of the matter is that on IPv6-mostly I haven't experienced anything that breaks at all. _It just works_.
 
 All my IPv6-only supporting devices like those in Apple's ecosystem seamlessly operate in IPv6-only mode, and the others that still require IPv4 addresses operate dual-stack. I fully expect that when Microsoft deploys CLAT support for Windows 11, my Windows machines will start respecting Op108 and stop taking IPv4 addresses from my pool since they won't need them anymore.
 
@@ -261,4 +261,11 @@ Considering everything from my experience so far, I've come away with a few gene
 
 Speaking of learning, I learned a lot from this wild ride as always. I did end up surviving the month without re-enabling IPv4 on my LAN, but I decided that all future networks I deploy will be of the IPv6-mostly variety.
 
-One day, I will absent-mindedly log into my router and check my DHCPv4 lease table. And there will be no entries. All my devices will behave as they should, using v6 and avoiding taking a v4 lease at all. On that day I'll be able to head over to my networking config and remove v4 entirely. Perhaps I'm dreaming, but having delved into transitional technologies through this project, it really does seem plausible that day might come in the next few years. That will be a good day.
+One day, I will absent-mindedly log into my router and check my DHCPv4 lease table. And there will be no entries. All my devices will behave as they should, using IPv6 and avoiding taking an IPv4 lease at all. On that day I'll be able to head over to my networking config and remove IPv4 entirely. Perhaps I'm dreaming, but having delved into transitional technologies through this project, it really does seem plausible that day might come in the next few years. That will be a good day.
+
+## Potential follow-ups
+In this post, I've focused quite specifically on home networks, and on desktop/mobile devices. That was pretty necessary to avoid the post becoming even longer than it already was. There's a lot to be said in the server space for this too. Broadly, I found that applications deployed directly IPv6-only servers suffer largely the same pitfalls and successes as the desktop ones listed above.
+
+The one big caveat there is that containerisation and virtualisation technologies seem to all handle this situation in quirky and interesting ways. That could (and probably will) justify a post in itself at some point in the future. Docker, Podman, WSL, QEMU - your mileage may certainly vary when trying any of the above on an IPv6-only network. If you do try it, I'd be interested to see what your conclusions and experiences are.
+
+As part of this experimentation, I ended up deploying a full OpenBSD home router setup to create an IPv6-mostly network which implements all of the relevant RFCs (including NAT64, DNS64, PREF64 and Op108). I noticed while putting the config together that a lot of OpenBSD router config guides online focus very heavily on IPv4 networking and leave out most if not all of this kind of functionality. At some point I'll pull it all together and publish it as a guide as it might be useful to the community at large.
