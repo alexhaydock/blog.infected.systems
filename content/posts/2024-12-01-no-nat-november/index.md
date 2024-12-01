@@ -240,7 +240,7 @@ At its core, this is a deceptively simple concept. The idea is that you continue
 
 IPv6-Only Preferred generally relies on having IPv6 transition technologies in place so that when the client switches into IPv6-only mode, it is not cut off from the IPv4 internet entirely. But that's not a strict requirement. You _could_ enable this on a network without any NAT64 access at all. But you probably don't want to, so bear that in mind.
 
-Clients which support operating in IPv6-only mode and see a DHCPv4 server sending Option 108 will dutifully switch into that mode and avoid taking an IPv4 address from the DHCPv4 server, while clients that are incapable of switching into such a mode will avoid doing so. Clients which are too old to even understand the option will simply ignore it and carry on taking an IPv4 address as they always have.
+Clients which support operating in IPv6-only mode and see a DHCPv4 server sending Option 108 will dutifully switch into that mode and avoid taking an IPv4 address from the DHCPv4 server, while clients that are incapable of operating in IPv6-only mode will set themselves up as dual-stack clients just as they would have done previously. Clients which are too old to even understand the option will simply ignore it and carry on taking an IPv4 address as they always have.
 
 With this, we create what's called an IPv6-_mostly_ network. Effectively the technological equivalent of having our cake and eating it. In this configuration, the network is dual-stacked, but clients will only take an IPv4 address if they _need_ one. This allows us to watch our DHCPv4 lease table tick down in size until the day finally comes when we can disable IPv4 entirely.
 
