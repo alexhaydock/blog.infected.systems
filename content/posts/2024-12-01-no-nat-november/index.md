@@ -119,7 +119,7 @@ Through this process, we're able to get rid of any requirement for IPv4 connecti
 ### Wait, NAT64? Isn't that cheating?
 At this point, a few of you have probably already objected on the basis that this post is titled 'No NAT November' and I'm busy describing deploying something called **NAT**64 on only the second day of the challenge.
 
-I guess that's a fair complaint, but NAT64 has some useful qualities that set it apart from standard RFC 1918-inside-public-IPv4-outside type home networks (more commonly called NAT44).
+I guess that's a fair complaint, but NAT64 has some useful qualities that set it apart from standard private-IPv4-inside-public-IPv4-outside type home networks (more commonly called NAT44).
 
 The main difference here is that we don't have to host the gateway within our own network. Unlike using NAT44 where the internal IP ranges are usually going to be RFC 1918 private addresses that we can't route over the internet, our IPv6 addresses are globally publicly routable. Which means, in theory, anyone anywhere can host our NAT64 gateway for us.
 
