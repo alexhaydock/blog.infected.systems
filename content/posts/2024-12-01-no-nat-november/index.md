@@ -264,7 +264,7 @@ As part of this experimentation, I ended up deploying a full OpenBSD home router
 Considering everything from my experience so far, I've come away with a few general recommendations:
 * You should deploy IPv6 if your ISP supports it and you haven't bothered yet;
 * You should deploy IPv6-_mostly_ if you're adventurous and you have access to a NAT64 gateway or you can host one yourself;
-* You should deploy IPv6-_only_ if you're involved in developing software or devices that rely on networking. You'll probably learn a _lot_ from what happens, and you might be inspired to fix it. I'll buy you a beer if you do.
+* You should deploy IPv6-_only_ if you're involved in developing software or devices that rely on networking. You'll probably learn a _lot_ from how your apps and devices react, and you might be inspired to fix it. I'll buy you a beer if you do.
 
 Speaking of learning, I learned a lot from this wild ride as always. I did end up surviving the month without re-enabling IPv4 on my LAN, but I decided that all future networks I deploy will be of the IPv6-mostly variety.
 
