@@ -226,7 +226,7 @@ You simply:
 * Author a bunch of IETF RFCs that define a standard for using DHCPv4 messages to reconfigure willing hosts to switch into IPv6-only mode;
 * Get those RFCs ratified;
 * Get support to send these messages landed in all the major DHCPv4 servers;
-* Get the functionality to support the messages landed in all the major OSes;
+* Get the functionality to deal with these messages landed in all the major OSes;
 * Enjoy your new-found configuration powers over the devices on your network.
 
 Move over orchestration by Ansible Playbook. We have orchestration by RFC now.
