@@ -244,7 +244,7 @@ Clients which support operating in IPv6-only mode and see a DHCPv4 server sendin
 
 With this, we create what's called an IPv6-_mostly_ network. Effectively the technological equivalent of having our cake and eating it. In this configuration, the network is dual-stacked, but clients will only take an IPv4 address if they _need_ one. This allows us to watch our DHCPv4 lease table tick down in size until the day finally comes when we can disable IPv4 entirely.
 
-## IPv6-mostly - your road to single-stack-success
+## IPv6-mostly - your road to (eventual) single-stack-success
 IPv6-mostly networks really end up being the best of all worlds. I would revisit the table from the prior section and compare an IPv6-only+464XLAT setup with an IPv6-mostly setup, but the truth of the matter is that on IPv6-mostly I haven't experienced anything that breaks at all. _It just works_.
 
 All my IPv6-only supporting devices like those in Apple's ecosystem seamlessly operate in IPv6-only mode, and the others that still require IPv4 addresses operate dual-stack. I fully expect that when Microsoft deploys CLAT support for Windows 11, my Windows machines will start respecting Op108 and stop taking IPv4 addresses from my pool since they won't need them anymore.
