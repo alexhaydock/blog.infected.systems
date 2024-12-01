@@ -30,7 +30,7 @@ I know some network administrators use this increased maintenance burden as a re
 And since there's no faster way to learn the downsides of something than simply just doing it, so began my journey of spending November on a single-stack v6-only network.
 
 ## Scope
-So throughout the month of November, I decided that I would disable IPv6 connectivity on my main home network and see what broke, and whether there were any steps I could take to work around the breakage or fix it.
+So throughout the month of November, I decided that I would disable IPv4 connectivity on my main home network and see what broke, and whether there were any steps I could take to work around the breakage or fix it.
 
 Throughout the process, I wanted to follow an iterative approach. I would first take the network back to pure v6-only, without even any transitional technologies in place. And then I would add in the transitional technologies until I determined whether I could live without v4 connectivity long-term.
 
