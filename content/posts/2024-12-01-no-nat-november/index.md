@@ -253,6 +253,13 @@ With IPv6-mostly, we can build a clear pathway to transition all the way from an
 
 ![Flow diagram showing a pathway from IPv4-only networking to IPv6-only with a transitional IPv6-mostly phase in the middle](Mermaid3.png)
 
+## Potential follow-ups
+In this post, I've focused quite specifically on home networks, and on desktop/mobile devices. That was pretty necessary to avoid the post becoming even longer than it already was. There's a lot to be said in the server space for this too. Broadly, I found that applications deployed directly IPv6-only servers suffer largely the same pitfalls and successes as the desktop ones listed above.
+
+The one big caveat there is that containerisation and virtualisation technologies seem to all handle this situation in quirky and interesting ways. That could (and probably will) justify a post in itself at some point in the future. Docker, Podman, WSL, QEMU - your mileage may certainly vary when trying any of the above on an IPv6-only network. If you do try it, I'd be interested to see what your conclusions and experiences are.
+
+As part of this experimentation, I ended up deploying a full OpenBSD home router setup to create an IPv6-mostly network which implements all of the relevant RFCs (including NAT64, DNS64, PREF64 and Op108). I noticed while putting the config together that a lot of OpenBSD router config guides online focus very heavily on IPv4 networking and leave out most if not all of this kind of functionality. At some point I'll pull it all together and publish it as a guide as it might be useful to the community at large.
+
 ## Day 30+: Conclusions and recommendations for the future
 Considering everything from my experience so far, I've come away with a few general recommendations:
 * You should deploy IPv6 if your ISP supports it and you haven't bothered yet;
@@ -262,10 +269,3 @@ Considering everything from my experience so far, I've come away with a few gene
 Speaking of learning, I learned a lot from this wild ride as always. I did end up surviving the month without re-enabling IPv4 on my LAN, but I decided that all future networks I deploy will be of the IPv6-mostly variety.
 
 One day, I will absent-mindedly log into my router and check my DHCPv4 lease table. And there will be no entries. All my devices will behave as they should, using IPv6 and avoiding taking an IPv4 lease at all. On that day I'll be able to head over to my networking config and remove IPv4 entirely. Perhaps I'm dreaming, but having delved into transitional technologies through this project, it really does seem plausible that day might come in the next few years. That will be a good day.
-
-## Potential follow-ups
-In this post, I've focused quite specifically on home networks, and on desktop/mobile devices. That was pretty necessary to avoid the post becoming even longer than it already was. There's a lot to be said in the server space for this too. Broadly, I found that applications deployed directly IPv6-only servers suffer largely the same pitfalls and successes as the desktop ones listed above.
-
-The one big caveat there is that containerisation and virtualisation technologies seem to all handle this situation in quirky and interesting ways. That could (and probably will) justify a post in itself at some point in the future. Docker, Podman, WSL, QEMU - your mileage may certainly vary when trying any of the above on an IPv6-only network. If you do try it, I'd be interested to see what your conclusions and experiences are.
-
-As part of this experimentation, I ended up deploying a full OpenBSD home router setup to create an IPv6-mostly network which implements all of the relevant RFCs (including NAT64, DNS64, PREF64 and Op108). I noticed while putting the config together that a lot of OpenBSD router config guides online focus very heavily on IPv4 networking and leave out most if not all of this kind of functionality. At some point I'll pull it all together and publish it as a guide as it might be useful to the community at large.
