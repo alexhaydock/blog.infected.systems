@@ -183,9 +183,9 @@ I've had mixed results using `clatd`. It's a touch finnicky and seems to get a b
 I'd like to see something emerge for Linux which is a bit more embedded into the core of the OS and functions a bit more smoothly, like Apple's implementation. There's been an issue open on [systemd's GitHub](https://github.com/systemd/systemd/issues/23674) for a couple of years now asking for something like this. Who knows, maybe we'll see `systemd-clatd` eventually.
 
 ## Day 3 - 30: IPv6-only (with transitional tech)
-So by Day 3, I still have my IPv6-only network deployed, but I also have NAT64+DNS64 along with CLATs on devices which support them.
+So by Day 3, I still have my IPv6-only network deployed, and I also have NAT64+DNS64 along with CLATs on devices which support them.
 
-At this point, things are far more functional than they were on Day 1. DNS64 is really taking care of almost everything on my Windows and Linux hosts, and on my Apple hosts, the CLAT is getting me the rest of the way.
+At this point, things are far more functional than they were on Day 1. DNS64 is really taking care of almost everything on my Windows and Linux hosts, and on my Apple hosts the CLAT is getting me the rest of the way.
 
 There's still a few things annoyingly broken though, but now that the transitional tech has been deployed, they all revolve around the apps that insist on using IPv4 literals.
 
