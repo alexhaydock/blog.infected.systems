@@ -144,7 +144,7 @@ The way this works is that a compatible host will set up the local IPv4 stack of
 
 ![A screenshot of iOS's network settings showing an active CLAT](iOSCLAT.jpg)
 
-What's going on here is that the 'Router' represents the fake CLAT gateway, which exists within the kernel of the device itself. And the 'IP Address' represents the fake endpoint IP that the device has assigned itself.
+What's going on here is that the 'Router' represents the fake CLAT gateway, which exists within the device itself. And the 'IP Address' represents the fake endpoint IP that the device has assigned itself.
 
 This allows the device to act like it has a fully normal and functional IPv4 stack, while transparently translating packets in the background to be able to handle an IPv6-only transit layer.
 
@@ -176,7 +176,7 @@ Once I deployed my NAT64+DNS64 support, all my Apple devices seamlessly configur
 Sadly, the same cannot be said about Windows. Although as of March 2024, [Microsoft have committed to bring CLAT support to Windows 11](https://techcommunity.microsoft.com/blog/networkingblog/windows-11-plans-to-expand-clat-support/4078173), which is great news. Unfortunately, as of Win 11 24H2, it still hasn't landed yet so we may be waiting a bit longer.
 
 #### Linux
-In the CLAT space, Linux is... interesting. [clatd](https://github.com/toreanderson/clatd) exists and does see some maintenance, though the only distributions that seem to package it are [Fedora and openSUSE](https://github.com/toreanderson/clatd), and neither enable it by default.
+In the CLAT space, Linux is... interesting. [clatd](https://github.com/toreanderson/clatd) exists and does see some maintenance, though the only distributions that seem to package it are [Fedora and openSUSE](https://pkgs.org/search/?q=clatd), and neither ship it by default.
 
 I've had mixed results using `clatd`. It's a touch finnicky and seems to get a bit confused when carrying out very regular tasks such as switching between ethernet and Wi-Fi when docking/undocking a laptop, for example.
 
