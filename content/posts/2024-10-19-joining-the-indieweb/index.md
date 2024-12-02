@@ -2,6 +2,8 @@
 title = 'Joining the IndieWeb'
 date = 2024-10-19T19:00:00Z
 draft = false
+summary = "Introducing my new blog."
+tags = ['indieweb', 'hugo', 'meta']
 +++
 
 Hi, I'm [Alex](https://infosec.exchange/@alexhaydock). Welcome to my new home on the web!

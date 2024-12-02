@@ -2,6 +2,8 @@
 title = 'Reading ZFS drives on Windows with the power of WSL'
 date = 2024-11-24T11:30:00Z
 draft = false
+summary = "ZFS? In my WSL? ... It's more likely than you think."
+tags = ['zfs', 'windows', 'wsl', 'linux']
 +++
 
 I recently found myself in a situation where I needed to read a ZFS-formatted drive, but with only a Windows machine to-hand.

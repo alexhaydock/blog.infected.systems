@@ -17,6 +17,9 @@ section = ['html']
 taxonomy = ['html']
 term = ['html']
 
+[taxonomies]
+  tag = 'tags'
+
 # Ensure that Hugo doesn't try to use inline CSS for our syntax highlighting.
 # (We've got that covered manually in our theme's CSS)
 [markup]

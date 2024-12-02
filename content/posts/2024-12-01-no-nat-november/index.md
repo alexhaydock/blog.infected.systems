@@ -2,6 +2,8 @@
 title = 'No NAT November: My Month Without IPv4'
 date = 2024-12-01T18:00:00Z
 draft = false
+summary = "I took nixCraft's challenge to disable IPv4 in my home network."
+tags = ['ipv6', 'networking']
 +++
 
 ## Day 0: Challenge accepted

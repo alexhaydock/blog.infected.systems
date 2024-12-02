@@ -2,6 +2,8 @@
 title = 'Reinstalling my laptop with Ubuntu autoinstall'
 date = 2024-10-22T18:00:00Z
 draft = false
+summary = "Another day, another attempt at managing desktop Linux as if it was the cloud."
+tags = ['ubuntu', 'linux']
 +++
 
 I've recently been playing with using Ubuntu's [autoinstall](https://canonical-subiquity.readthedocs-hosted.com/en/latest/intro-to-autoinstall.html) feature to reinstall a few Ubuntu Desktop machines. It has what I think is a very user-friendly flow so I thought I'd write a bit about it.
