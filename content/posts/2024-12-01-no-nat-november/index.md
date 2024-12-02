@@ -204,9 +204,10 @@ What you'll notice from the above is that it really isn't a particularly long li
 But it's quite striking that we're a long long way from the "everything is broken" territory people might instinctively expect when they think about the fallout of disabling IPv4, even when considering systems without a functioning CLAT.
 
 Once we put it all together, we now have a network that consists of:
-* A NAT64 gateway (whether hosted by our ISP, or elsewhere)
-* IPv6-only clients that use DNS64 to direct _most_ of their legacy IPv4 traffic to the NAT64 gateway, getting them 99% of the way
-* IPv6-only clients that also support a CLAT routing _all_ of their legacy IPv4 traffic to the NAT64 gateway, getting them the remaining 1% of the way
+* A NAT64 gateway (whether hosted by our ISP, or elsewhere);
+* A DNS64 server (whether hosted by our ISP, or elsewhere);
+* IPv6-only clients using DNS64 to direct _most_ of their legacy IPv4 traffic via the NAT64 gateway, getting them 99% of the way; and
+* IPv6-only clients **that also support a CLAT** directing _all_ of their legacy IPv4 traffic via the NAT64 gateway, getting them the remaining 1% of the way.
 
 But for the devices that don't work at all, or which don't support a CLAT, we're still left in one of a few non-ideal situations:
 * Waiting for our OS vendor to implement a CLAT;
