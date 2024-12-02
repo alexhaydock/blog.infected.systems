@@ -182,7 +182,7 @@ I've had mixed results using `clatd`. It's a touch finnicky and seems to get a b
 
 I'd like to see something emerge for Linux which is a bit more embedded into the core of the OS and functions a bit more smoothly, like Apple's implementation. There's been an issue open on [systemd's GitHub](https://github.com/systemd/systemd/issues/23674) for a couple of years now asking for something like this. Who knows, maybe we'll see `systemd-clatd` eventually.
 
-## Day 3 - 30: IPv6-only (with transitional tech)
+## Day 3 to 30: IPv6-only (with transitional tech)
 So by Day 3, I still have my IPv6-only network deployed, and I also have NAT64+DNS64 along with CLATs on devices which support them.
 
 At this point, things are far more functional than they were on Day 1. DNS64 is really taking care of almost everything on my Windows and Linux hosts, and on my Apple hosts the CLAT is getting me the rest of the way.
@@ -203,11 +203,17 @@ What you'll notice from the above is that it really isn't a particularly long li
 
 But it's quite striking that we're a long long way from the "everything is broken" territory people might instinctively expect when they think about the fallout of disabling IPv4, even when considering systems without a functioning CLAT.
 
-But we're still left in one of two non-ideal situations:
-* Waiting for our OS vendor to implement a CLAT; or
-* Complaining about individual apps still relying on IPv4, on GitHub issues which are [sometimes over 10 years old](https://github.com/ValveSoftware/steam-for-linux/issues/3372).
+Once we put it all together, we now have a network that consists of:
+* A NAT64 gateway (whether hosted by our ISP, or elsewhere)
+* IPv6-only clients that use DNS64 to direct _most_ of their legacy IPv4 traffic to the NAT64 gateway, getting them 99% of the way
+* IPv6-only clients that also support a CLAT routing _all_ of their legacy IPv4 traffic to the NAT64 gateway, getting them the remaining 1% of the way
 
-Neither of these are particularly great options. But there is an alternative.
+But for the devices that don't work at all, or which don't support a CLAT, we're still left in one of a few non-ideal situations:
+* Waiting for our OS vendor to implement a CLAT;
+* Begging our device vendor to not treat IPv6-only networks as 'broken'; or
+* Complaining about individual apps using IPv4 literals [on GitHub issues which are sometimes over 10 years old](https://github.com/ValveSoftware/steam-for-linux/issues/3372).
+
+None of these are particularly great options. But there is an alternative.
 
 As of 2020, there's a shining fix to our predicament available, in the form of IPv6-_mostly_. In order to understand where IPv6-mostly comes from, I can't avoid relaying the wonderful story of its inception, even though I know this post is already far too long.
 
@@ -245,7 +251,9 @@ Clients which support operating in IPv6-only mode and see a DHCPv4 server sendin
 With this, we create what's called an IPv6-_mostly_ network. Effectively the technological equivalent of having our cake and eating it. In this configuration, the network is dual-stacked, but clients will only take an IPv4 address if they _need_ one. This allows us to watch our DHCPv4 lease table tick down in size until the day finally comes when we can disable IPv4 entirely.
 
 ## IPv6-mostly - your road to (eventual) single-stack-success
-IPv6-mostly networks really end up being the best of all worlds. I would revisit the table from the prior section and compare an IPv6-only+464XLAT setup with an IPv6-mostly setup, but the truth of the matter is that on IPv6-mostly I haven't experienced anything that breaks at all. _It just works_.
+IPv6-mostly networks really end up being the best of all worlds. I would revisit the table from the prior section and compare an IPv6-only+464XLAT setup with an IPv6-mostly setup, but the truth of the matter is that on IPv6-mostly I haven't experienced anything that breaks at all.
+
+_It just works_.
 
 All my IPv6-only supporting devices like those in Apple's ecosystem seamlessly operate in IPv6-only mode, and the others that still require IPv4 addresses operate dual-stack. I fully expect that when Microsoft deploys CLAT support for Windows 11, my Windows machines will start respecting Op108 and stop taking IPv4 addresses from my pool since they won't need them anymore.
 
