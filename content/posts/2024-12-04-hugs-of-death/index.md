@@ -68,7 +68,7 @@ Kasper very kindly operates [a free Public NAT64 service](https://nat64.net/) fo
 
 My blog is hosted on an IPv6-only VPS which uses IP space within my own IPv6-only ASN allocation, so I've been making use of this service to make sure IPv4-only clients aren't locked out of being able to read my posts.
 
-Based on [what Kasper suggested on Mastodon](https://westergaard.social/objects/c9bf9cec-aec8-432f-9a02-383893deffb3), it seems like the Hug of Death may have been localised to the IPv4 frontend, rather than the backend that my VPS is hosting.
+Based on [what Kasper suggested on Mastodon](https://westergaard.social/objects/c9bf9cec-aec8-432f-9a02-383893deffb3), it seems like the Hug of Death may have been localised to the IPv4 frontend, rather than the backend that my VPS is hosting. This probably explains some of the confusion I had above around the lack of obvious overload in the system resources.
 
 > From the log I can tell that for 11 hours straight the number of connected clients stayed between 90 and 100% of the connection limit. So there likely were times it didn't accept any new connections.
 >
