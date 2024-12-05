@@ -1,7 +1,7 @@
 baseURL = 'https://blog.infected.systems/'
 languageCode = 'en-gb'
 title = 'Alex Haydock'
-theme = 'smol-bean'
+theme = ["hugo-shortcode-roneo-collection", "smol-bean"]
 
 # Parameters
 [params]
