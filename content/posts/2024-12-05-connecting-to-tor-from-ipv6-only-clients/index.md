@@ -1,8 +1,8 @@
 +++
-title = 'Connecting to Tor on IPv6-only networks'
+title = 'Connecting to Tor from IPv6-only clients'
 date = 2024-12-05T19:15:00Z
 draft = false
-summary = "Some observations about the Tor Project and IPv6-only networking."
+summary = "A workaround to allow IPv6-only clients to connect to the Tor network."
 tags = ['tor', 'networking', 'ipv6']
 +++
 
@@ -25,6 +25,11 @@ ClientPreferIPv6ORPort 1
 ```
 
 We can get Tor working on an IPv6-only client. Adding this option and restarting Tor is all that was required for me.
+
+On a Linux host, this file is probably at:
+```
+/etc/tor/torrc
+```
 
 I'm currently using this method to host the `.onion` address for this blog. You can visit it using the `.onion` link at the bottom of this page, but it should also send the `Onion-Location` header allowing Tor Browser users to be redirected to it automatically.
 
