@@ -7,7 +7,7 @@ tags = ['tor', 'networking', 'ipv6']
 +++
 
 {{< box important >}}
-**Warning:** It's possible that there are good censorship-resistance reasons why the config option discussed in this post isn't enabled by default. If you rely on Tor in a hostile network or territory, I can't recommend blindly setting the option discussed below.
+**Warning:** It's possible that there are good traffic-analysis-resistance reasons why the Tor Project haven't enabled the option below by default. If you rely on Tor in a hostile network or territory, I can't recommend setting the option discussed below without doing additional research.
 {{< /box >}}
 
 As an addendum to my recent post about [running an IPv6-only network](/posts/2024-12-01-no-nat-november), I wanted to share some things I learned recently about connecting to Tor from an IPv6-only host.
