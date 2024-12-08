@@ -20,7 +20,7 @@ There's an option that can be enabled in the configuration that fixes this behav
 
 By setting the following option in our `torrc` file:
 
-```
+```text
 ClientPreferIPv6ORPort 1
 ```
 
