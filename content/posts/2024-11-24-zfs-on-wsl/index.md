@@ -61,7 +61,7 @@ swap=0
 ```
 
 Start up WSL again by opening a new WSL session and check that our custom kernel is being used:
-```
+```text
 $ uname -a
 Linux PrecisionT1700 5.15.167.4-microsoft-standard-WSL2-penguins-rule #4 SMP Sat Nov 23 19:15:47 GMT 2024 x86_64 x86_64 x86_64 GNU/Linux
 ```
