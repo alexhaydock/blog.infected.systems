@@ -210,7 +210,7 @@ Similar to our NAT64 gateway, we can add this capability with a single line of `
 
 ```text
 [...]
-match out on egress inet from !(egress:network) to any nat-to (egress:0)
+match out on egress inet nat-to (egress)
 [...]
 ```
 
