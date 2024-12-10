@@ -94,8 +94,8 @@ An example which tends to get me top marks in all [the various bufferbloat teste
 
 ```text
 [...]
+queue isp_d on $lan flows 1024 bandwidth 68M max 69M qlimit 1024 default
 queue isp_u on $wan flows 1024 bandwidth 15M max 16M qlimit 1024 default
-queue isp_d on $downstream flows 1024 bandwidth 68M max 69M qlimit 1024 default
 [...]
 ```
 
