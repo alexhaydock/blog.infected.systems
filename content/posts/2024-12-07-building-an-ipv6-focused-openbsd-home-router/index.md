@@ -117,7 +117,7 @@ Amazing, right?
 ## DNS64 server
 To go with our NAT64 gateway, it's useful for us to have a DNS64 server.
 
-We don't strictly have to do this ourselves. Since we're using the well-known NAT64 prefix of `64:ff9b::/96` for our gateway, we could delegate this to a public DNS64-capble DNS server, such as [Google Public DNS64](https://developers.google.com/speed/public-dns/docs/dns64). But it's nice to host it ourselves.
+We don't strictly have to do this ourselves. Since we're using the well-known NAT64 prefix of `64:ff9b::/96` for our gateway, we could delegate this to a public DNS64-capable server, such as [Google Public DNS64](https://developers.google.com/speed/public-dns/docs/dns64). But it's nice to host it ourselves.
 
 The unbound config snippet below is what we need to add to the `server:` directive in the config file for our Unbound DNS resolver to allow it to synthesise DNS64 AAAA records. Unbound also automatically adds the `ipv4only.arpa` records we need in order for clients to be able to discover the NAT64 prefix using [RFC 7050](https://www.rfc-editor.org/rfc/rfc7050).
 
