@@ -63,7 +63,7 @@ inet6 2001:db8:cafe::1 64
 !/sbin/route add -inet6 default -ifp pppoe0 fe80::%pppoe0
 ```
 
-In my case, I have a static `/48` from my ISP, so I've statically assigned the `::1` address from the first `/64` in my `/48` to the router in this file here on the `inet` line. If your ISP uses prefix delegation to rotate prefixes, you might need to change some of these lines.
+In my case, I have a static `/48` from my ISP, so I've statically assigned the `::1` address from the first `/64` in my `/48` to the router in this file here on the `inet` line. This will become the reachable IPv6 address of this router itself from the WAN. If your ISP uses prefix delegation to rotate prefixes, you might need to change some of these lines.
 
 In the above example, the first line of our config specifies `vi0` as the upstream physical interface that will be used for dialing the internet connection. To go with this, we need some config to bring up that interface. I use the following simple config to set the MTU and bring the interface up:
 
@@ -90,7 +90,7 @@ In this post I'll just focus on calling out the things which are interesting to 
 ## Bufferbloat shaping
 Before we launch into the IPv6-focused featureset, I wanted to call out another feature of OpenBSD `pf` that I really like. The bufferbloat shaping options are super simple compared to alternatives like `tc` on Linux.
 
-An example which tends to get me top-marks in all the various bufferbloat testers online, and which is tuned for my VDSL connection that runs at approx 69 mbps down / 16 mbps up:
+An example which tends to get me top marks in all [the various bufferbloat testers](https://www.waveform.com/tools/bufferbloat) online, and which is tuned for my VDSL connection that runs at approx 69 mbps down / 16 mbps up:
 
 ```text
 [...]
@@ -112,7 +112,9 @@ pass in on $lan inet6 from any to 64:ff9b::/96 af-to inet from (egress:0)
 [...]
 ```
 
-Amazing, right?
+In this example, `(egress:0)` is OpenBSD `pf` speak for the first IPv4 address (`:0`) of the interface which has the default route applied (`egress`). In our case, that means NAT64 traffic will be NAT'ed to the first IPv4 address our ISP gives us on our WAN link. This is probably what you want too, but if your needs are more specific then you can tune this line as you see fit.
+
+But overall, it really is that simple to set up. Amazing, right?
 
 ## DNS64 server
 To go with our NAT64 gateway, it's useful for us to have a DNS64 server.
