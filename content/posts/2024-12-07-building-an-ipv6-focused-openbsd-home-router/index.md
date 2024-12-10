@@ -203,6 +203,19 @@ subnet 192.168.100.0 netmask 255.255.255.0 {
 }
 ```
 
+## NAT44 gateway (Legacy IPv4 NAT)
+We do still want to provide IPv4 capabilities to our downstream LAN, so that we can serve devices which are too old to operate in IPv6-only mode, or which need IPv4 for other reasons.
+
+Similar to our NAT64 gateway, we can add this capability with a single line of `pf`:
+
+```text
+[...]
+match out on egress inet from !(egress:network) to any nat-to (egress:0)
+[...]
+```
+
+This still allows us to host LANs or VLANs without any IPv4 support at all if we desire. For such networks, we can simply avoid adding an IPv4 subnet to the interface (by omitting the `inet` line in the `/etc/hostname.vi*` file), and avoid having a corresponding entry in the DHCPv4 server.
+
 ## Updating via `syspatch`
 If, like me, you're more familiar with Linux than OpenBSD, you may want to familiarise yourself with `syspatch` at this point, which is how security updates are applied to the base system.
 
