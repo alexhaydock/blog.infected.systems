@@ -92,6 +92,8 @@ Before we launch into the IPv6-focused featureset, I wanted to call out another 
 
 An example which tends to get me top marks in all [the various bufferbloat testers](https://www.waveform.com/tools/bufferbloat) online, and which is tuned for my VDSL connection that runs at approx 69 mbps down / 16 mbps up:
 
+### `/etc/pf.conf`
+
 ```text
 [...]
 queue isp_d on $lan flows 1024 bandwidth 68M max 69M qlimit 1024 default
@@ -126,6 +128,7 @@ The unbound config snippet below is what we need to add to the `server:` directi
 The use of `validator` in this config means we're also preserving DNSSEC capabilities, as Unbound itself will validate DNSSEC. You can test that this is working at [dnscheck.tools](https://www.dnscheck.tools/).
 
 ### `/var/unbound/etc/unbound.conf`
+
 ```text
 [...]
 module-config: "dns64 validator iterator"
@@ -207,6 +210,8 @@ subnet 192.168.100.0 netmask 255.255.255.0 {
 We do still want to provide IPv4 capabilities to our downstream LAN, so that we can serve devices which are too old to operate in IPv6-only mode, or which need IPv4 for other reasons.
 
 Similar to our NAT64 gateway, we can add this capability with a single line of `pf`:
+
+### `/etc/pf.conf`
 
 ```text
 [...]
