@@ -33,7 +33,7 @@ In this case, I opted for OpenBSD for one specific reason, which is that you can
 I'm also a big fan of the fact that you can implement everything in this guide in the OpenBSD base system without adding a single extra package.
 
 ## Base system
-I started with OpenBSD 7.6 for this guide. I'll leave installation as an exercise to the reader, since there are plenty of guides out there on how to install OpenBSD but I used the regular `install76.iso` and opted to remove the `x*` and `games*` sets when prompted at the set selection screen.
+I started with OpenBSD 7.6 for this guide. I'll leave installation as an exercise to the reader, since there are plenty of installation guides out there. I used the regular `install76.iso` and opted to remove the `x*` and `games*` sets when prompted at the set selection screen.
 
 ## Basic interface configuration
 In this example, I will be building a simple two-interface WAN/LAN config with interfaces as follows:
