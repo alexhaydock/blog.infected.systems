@@ -37,13 +37,15 @@ I started with OpenBSD 7.6 for this guide. I'll leave installation as an exercis
 
 ## Basic interface configuration
 In this example, I will be building a simple two-interface WAN/LAN config with interfaces as follows:
-* `vi0` - WAN interface
-* `vi1` - LAN interface
-* `pppoe0` - virtual PPoE interface for dialing my ISP, backed by `vi0`
+* `vio0` - WAN interface
+* `vio1` - LAN interface
+* `pppoe0` - virtual PPoE interface for dialing my ISP, backed by `vio0`
 
-OpenBSD's interface configuration is very simple. As an example, we can configure an IPv6-capable interface like this - where `vi1` is the name of our downstream LAN interface:
+Since I'm using a QEMU VM to install OpenBSD here, my interfaces are named `vio*`, as that is the default interface name for VirtIO interfaces. If you're using physical hardware you may see alternative names such as `eth0` or `em0`. Running `ifconfig` on your installed system will help you discover the correct names for your interfaces.
 
-### `/etc/hostname.vi1`
+OpenBSD's interface configuration is very simple. As an example, we can configure an IPv6-capable interface like this - where `vio1` is the name of our downstream LAN interface:
+
+### `/etc/hostname.vio1`
 
 ```text
 inet 192.168.100.1 255.255.255.0
@@ -65,9 +67,9 @@ inet6 2001:db8:cafe::1 64
 
 In my case, I have a static `/48` from my ISP, so I've statically assigned the `::1` address from the first `/64` in my `/48` to the router in this file here on the `inet` line. This will become the reachable IPv6 address of this router itself from the WAN. If your ISP uses prefix delegation to rotate prefixes, you might need to change some of these lines.
 
-In the above example, the first line of our config specifies `vi0` as the upstream physical interface that will be used for dialing the internet connection. To go with this, we need some config to bring up that interface. I use the following simple config to set the MTU and bring the interface up:
+In the above example, the first line of our config specifies `vio0` as the upstream physical interface that will be used for dialing the internet connection. To go with this, we need some config to bring up that interface. I use the following simple config to set the MTU and bring the interface up:
 
-### `/etc/hostname.vi0`
+### `/etc/hostname.vio0`
 
 ```text
 up mtu 1500
