@@ -83,7 +83,7 @@ For a fully functional `corerad` config, see [this one in my Pinewall project re
 ## Potential Downsides
 I've been trialing this fix in (home!) production for a while across all 3 of the above router advertisement daemons and haven't seen any downsides yet. I also can't really imagine any that would really arise. If you can think of any, please do let me know!
 
-We can also implement this fix while still staying in spec with [RFC 8106](https://datatracker.ietf.org/doc/html/rfc8106), which defines compliant values for the RDNSS lifetime. It dictates that the lifetime SHOULD be set to a value of _at least_ 3 times the value of `MaxRtrAdvInterval` (which is defined in [RFC 4861](https://www.rfc-editor.org/rfc/rfc4861) as being a maximum of 1800 seconds). So for those counting - an RDNSS timeout of 5400 seconds and above would be within RFC 8106 spec on any network.
+We can also implement this fix while still staying in spec with [RFC 8106](https://www.rfc-editor.org/rfc/rfc8106), which defines compliant values for the RDNSS lifetime. It dictates that the lifetime SHOULD be set to a value of _at least_ 3 times the value of `MaxRtrAdvInterval` (which is defined in [RFC 4861](https://www.rfc-editor.org/rfc/rfc4861) as being a maximum of 1800 seconds). So for those counting - an RDNSS timeout of 5400 seconds and above would be within RFC 8106 spec on any network.
 
 So our long timeout is within spec, and ought to ensure that the laptop we leave in sleep mode in a bag for 5 days still wakes up without any annoying network interruption.
 
