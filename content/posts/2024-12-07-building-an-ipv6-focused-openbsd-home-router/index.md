@@ -116,7 +116,7 @@ pass in on $lan inet6 from any to 64:ff9b::/96 af-to inet from (egress:0)
 [...]
 ```
 
-In this example, `(egress:0)` is OpenBSD `pf` speak for the first IPv4 address (`:0`) of the interface which has the default route applied (`egress`). In our case, that means NAT64 traffic will be NAT'ed to the first IPv4 address our ISP gives us on our WAN link. This is probably what you want too, but if your needs are more specific then you can tune this line as you see fit.
+In this example, `(egress:0)` is OpenBSD-`pf`-speak for the first IPv4 address (`:0`) of the interface which has the default route applied (`egress`). In our case, that means NAT64 traffic will be NAT'ed to the first IPv4 address our ISP gives us on our WAN link. This is probably what you want too, but if your needs are more specific then you can tune this line as you see fit.
 
 But overall, it really is that simple to set up. Amazing, right?
 
@@ -140,7 +140,7 @@ module-config: "dns64 validator iterator"
 ## IPv6 Router Advertisements & PREF64
 To configure IPv6 Router Advertisements and advertise IPv6 prefixes on our network for clients to adopt via SLAAC, we can use `rad`, which is also built into OpenBSD.
 
-In my case, since I have the `/48` from my ISP, I simply pick `/64` allocations out of this for my downstream VLANs. I assign those in the `/etc/hostname.vi*` files as covered above. With `rad` as our RA daemon, it's smart enough to do the rest simply by virtue of us feeding it the interface name.
+In my case, since I have the `/48` from my ISP, I simply pick `/64` allocations out of this for my downstream VLANs. I assign those in the `/etc/hostname.vio*` files as covered above. With `rad` as our RA daemon, it's smart enough to do the rest simply by virtue of us feeding it the interface name.
 
 ### `/etc/rad.conf`
 
@@ -153,6 +153,9 @@ In my case, since I have the `/48` from my ISP, I simply pick `/64` allocations 
 interface vio1
 default router yes
 dns {
+  # Extend the default RDNSS advertisement lifetime
+  # to work around RDNSS expiry bug on macOS / iOS
+  lifetime 604800
   nameserver {
     # Advertise this router as the DNS server,
     # just like we do for IPv4 in the dhcpcd config
@@ -221,7 +224,7 @@ match out on egress inet nat-to (egress)
 [...]
 ```
 
-This does still allow us to host LANs or VLANs without any IPv4 support at all if we desire. For such networks, we can simply avoid adding an IPv4 subnet to the interface (by omitting the `inet` line in the `/etc/hostname.vi*` file), and avoid having a corresponding entry in the DHCPv4 server.
+This does still allow us to host LANs or VLANs without any IPv4 support at all if we desire. For such networks, we can simply avoid adding an IPv4 subnet to the interface (by omitting the `inet` line in the `/etc/hostname.vio*` file), and avoid having a corresponding entry in the DHCPv4 server.
 
 ## Updating via `syspatch`
 If, like me, you're more familiar with Linux than OpenBSD, you may want to familiarise yourself with `syspatch` at this point, which is how security updates are applied to the base system.

@@ -273,6 +273,8 @@ As part of this experimentation, I ended up deploying a full OpenBSD home router
 
 _**Update:** I have [since published the OpenBSD router post](/posts/2024-12-07-building-an-ipv6-focused-openbsd-home-router)._
 
+_**Update:** I have also since published [a post about an issue with disappearing DNS servers on macOS/iOS when operating in IPv6-only mode](/posts/2024-12-18-working-around-macos-and-ios-rdnss-expiry-bug), which describes a workaround for the issue._
+
 ## Day 30+: Conclusions and recommendations for the future
 Considering everything from my experience so far, I've come away with a few general recommendations:
 * You should deploy IPv6 if your ISP supports it and you haven't bothered yet;
