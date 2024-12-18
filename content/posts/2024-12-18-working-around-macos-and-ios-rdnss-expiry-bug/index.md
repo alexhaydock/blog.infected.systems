@@ -78,6 +78,6 @@ We can fix the issue in our `corerad` config as follows (this is a snippet and n
   lifetime = "604800s"
 ```
 
-For a fully functional `rad.conf`, see [this one in my Pinewall project repository](https://github.com/alexhaydock/pinewall/blob/191a3643047aed84c72ee36c2daefa6d5c6aaead/config/etc/corerad/config.toml). I haven't written about Pinewall yet (my image-based Alpine Linux router spin), but I'll probably write a post about that soon.
+For a fully functional `corerad` config, see [this one in my Pinewall project repository](https://github.com/alexhaydock/pinewall/blob/191a3643047aed84c72ee36c2daefa6d5c6aaead/config/etc/corerad/config.toml). I haven't written about Pinewall yet (my image-based Alpine Linux router spin), but I'll probably write a post about that soon.
 
 Hopefully this fix helps some folk!
