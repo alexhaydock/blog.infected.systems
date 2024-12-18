@@ -32,7 +32,7 @@ So with that in mind, I wanted to write up the fix that I have that works for no
 
 We can fix this by extending the default lifetime for RDNSS advertisements in the config for our router advertisement daemon.
 
-In my extend this to 604800 seconds. That's quite a substantial increase over the default of around 900 seconds, but changing DNS servers probably isn't something that home users are doing very often, and it's long enough to cover a device which might be in a low power state for several days before being woken back up.
+In my configs, I extend this to 604800 seconds. That's quite a substantial increase over the default of around 900 seconds, but changing DNS servers probably isn't something that home users are doing very often, and it's long enough to cover a device which might be in a low power state for several days before being woken back up.
 
 ## The Fix - `rad`
 
