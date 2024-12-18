@@ -14,7 +14,7 @@ I wanted to write about my solution for this bug since I've seen a few people me
 
 ## The Bug
 
-It seems that what's going on here arises from a situation where the RDNSS entries (DNS entries which the host has learned via IPv6 Router Advertisements) can expire while the host is in a low power state. Often these seem to be sent with a default lifetime of 900 seconds. It's quite common that we'll have hosts that enter a low power or sleep state for more than 900 seconds, so this is very easy to trigger.
+It seems that what's going on here arises from a situation where the RDNSS entries (DNS entries which the host has learned via IPv6 Router Advertisements) can expire while the host is in a low power state. Often these seem to be sent with a default lifetime of about 1800 seconds. It's quite common that we'll have hosts that enter a low power or sleep state for more than 1800 seconds, so this is very easy to trigger.
 
 On a dual stack network, this bug wouldn't cause any issues, because the host would wake back up and simply carry on, happily falling back to using the IPv4 nameservers it learned from DHCPv4. But when we're operating in IPv6-only mode, including if we're on an IPv6-mostly network, this bug causes the host to wake up, discover it has no DNS servers available on the network link it's connected to, and mark the connection as broken. On iOS this means the device often falls back to a cellular connection, while on macOS it just means the network link appears completely broken until Wi-Fi is toggled on/off.
 
@@ -32,7 +32,7 @@ So with that in mind, I wanted to write up the fix that I have that works for no
 
 We can fix this by extending the default lifetime for RDNSS advertisements in the config for our router advertisement daemon.
 
-In my configs, I extend this to 604800 seconds. That's quite a substantial increase over the default of around 900 seconds, but changing DNS servers probably isn't something that home users are doing very often, and it's long enough to cover a device which might be in a low power state for several days before being woken back up.
+In my configs, I extend this to 604800 seconds (or 1 week). That's quite a substantial increase over the default of around 1800 seconds, but changing DNS servers probably isn't something that home users are doing very often, and it's long enough to cover a device which might be in a low power state for several days before being woken back up.
 
 ## The Fix - `rad`
 
@@ -79,5 +79,12 @@ We can fix the issue in our `corerad` config as follows (this is a snippet and n
 ```
 
 For a fully functional `corerad` config, see [this one in my Pinewall project repository](https://github.com/alexhaydock/pinewall/blob/191a3643047aed84c72ee36c2daefa6d5c6aaead/config/etc/corerad/config.toml). I haven't written about Pinewall yet (my image-based Alpine Linux router spin), but I'll probably write a post about that soon.
+
+## Potential Downsides
+I've been trialing this fix in (home!) production for a while across all 3 of the above router advertisement daemons and haven't seen any downsides yet. I also can't really imagine any that would really arise. If you can think of any, please do let me know!
+
+We can also implement this fix while still staying in spec with [RFC 8106](https://datatracker.ietf.org/doc/html/rfc8106), which defines compliant values for the RDNSS lifetime. It dictates that the lifetime SHOULD be set to a value of _at least_ 3 times the value of `MaxRtrAdvInterval` (which is defined in [RFC 4861](https://www.rfc-editor.org/rfc/rfc4861) as being a maximum of 1800 seconds). So for those counting - an RDNSS timeout of 5400 seconds and above would be within RFC 8106 spec on any network.
+
+So our long timeout is within spec, and ought to ensure that the laptop we leave in sleep mode in a bag for 5 days still wakes up without any annoying network interruption.
 
 Hopefully this fix helps some folk!
