@@ -4,6 +4,7 @@ date = 2024-12-01T18:00:00Z
 draft = false
 summary = "I took nixCraft's challenge to disable IPv4 in my home network."
 tags = ['ipv6', 'networking']
+mermaid = true
 +++
 
 ## Day 0: Challenge accepted
@@ -98,7 +99,11 @@ The primary transitional technology that's going to be relevant for home users i
 ### NAT64 with DNS64
 Broadly, DNS64 works like this:
 
-![Diagram showing the flow of DNS64](Mermaid1.png)
+```mermaid
+flowchart LR
+	A <--DNS server sends synthetic<br>AAAA records in response--> E[DNS64 server]
+	A[IPv6 device] <--IPv6--> C[NAT64 gateway<br>aka PLAT] <--IPv4--> D[IPv4 internet]
+```
 
 What's happening here is that our IPv6 device makes DNS requests as normal, but to a DNS server which is running in DNS64 mode. This is effectively a normal DNS server speaking the regular DNS protocol, but when in this mode, the server will detect when a domain has only A records and no AAAA records, and will synthesise 'fake' AAAA records for sites in this category.
 
@@ -152,7 +157,13 @@ This allows the device to act like it has a fully normal and functional IPv4 sta
 
 That looks like this and, as you can see, the end result is that we only have IPv6 packets leaving and returning to the device, allowing us to operate quite happily on an IPv6-only network segment:
 
-![Diagram showing how NAT64 works with a CLAT on the client device](Mermaid2.png)
+```mermaid
+flowchart LR
+  subgraph Device
+    A[App] <--IPv4--> B[IPv4 stack<br>on device] <--IPv4--> C[CLAT<br>on device]
+  end
+  C <--IPv6--> D[NAT64 gateway<br>aka PLAT] <--IPv4--> E[IPv4 internet]
+```
 
 This allows us to effectively deal with applications and other tooling which might expect or require the ability to be able to communicate with hard-coded IPv4 literals.
 
@@ -262,7 +273,14 @@ All my IPv6-only supporting devices like those in Apple's ecosystem seamlessly o
 
 With IPv6-mostly, we can build a clear pathway to transition all the way from an IPv4-only to an IPv6-only network, with a smooth transitional phase in the middle:
 
-![Flow diagram showing a pathway from IPv4-only networking to IPv6-only with a transitional IPv6-mostly phase in the middle](Mermaid3.png)
+```mermaid
+flowchart TD
+    subgraph Smooth Transitional Phase
+      B -- see what breaks --> C(Deploy NAT64+PREF64) -- see what breaks --> D(Deploy DNS64) -- see what breaks --> E(Deploy DHCP Op108) -- see what breaks --> v6m[IPv6-mostly] -- wait for DHCPv4 leases to reach zero --> F(Deprecate DHCPv4)
+    end
+    A[IPv4-only] --> B[Deploy Dual Stack]
+    F --> G[IPv6-only]
+```
 
 ## Potential follow-ups
 In this post, I've focused quite specifically on home networks, and on desktop/mobile devices. That was pretty necessary to avoid the post becoming even longer than it already was. There's a lot to be said in the server space for this too. Broadly, I found that applications deployed directly onto IPv6-only servers suffer largely the same pitfalls and successes as the desktop ones listed above.
