@@ -8,6 +8,7 @@ theme = ["hugo-shortcode-roneo-collection", "smol-bean"]
     # I have no idea why Hugo declares the date format this way using a specific example date, but
     # this string seems to give us RFC 3339 / ISO-8601 YYYY-MM-DD dates correctly so I'll just accept it
     dateFmt = "2006-01-02 15:04"
+    webmentionURL = 'https://webmention.io/blog.infected.systems/webmention'
 
 # Disable RSS output format for all page kinds in global config
 # (we re-enable it just for blog posts so we don't include every page in the feed)
