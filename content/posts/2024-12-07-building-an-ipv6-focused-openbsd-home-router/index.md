@@ -65,7 +65,7 @@ inet6 2001:db8:cafe::1 64
 !/sbin/route add -inet6 default -ifp pppoe0 fe80::%pppoe0
 ```
 
-In my case, I have a static `/48` from my ISP, so I've statically assigned the `::1` address from the first `/64` in my `/48` to the router in this file here on the `inet` line. This will become the reachable IPv6 address of this router itself from the WAN. If your ISP uses prefix delegation to rotate prefixes, you might need to change some of these lines.
+In my case, I have a static `/48` from my ISP, so I've statically assigned the `::1` address from the first `/64` in my `/48` to the router in this file here on the `inet6` line. This will become the reachable IPv6 address of this router itself from the WAN. If you want to use SLAAC to assign your WAN IPv6 address instead of doing it statically, you may wish to replace this line with `inet6 autoconf`. If your ISP uses DHCPv6-PD prefix delegation to allocate you a dynamic prefix, you may need a more complex configuration here. Unfortunately I don't have access to an ISP that uses this method, so I haven't been able to test a compatible config.
 
 In the above example, the first line of our config specifies `vio0` as the upstream physical interface that will be used for dialing the internet connection. To go with this, we need some config to bring up that interface. I use the following simple config to set the MTU and bring the interface up:
 
