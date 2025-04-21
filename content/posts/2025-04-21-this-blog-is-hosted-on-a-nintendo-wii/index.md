@@ -29,7 +29,7 @@ Unlike the other outdated and unmaintained examples above, clicking through to t
 As soon as I discovered this was fully supported and maintained, I knew I had to try deploying an actual production workload on it. That workload is the blog you're reading now.
 
 ### Finding a sacrificial Wii
-Our story begins at the EMF Camp 2024 Swap Shop - your premier source for pre-loved games consoles, cardboard boxes full of 56k modems, and radioactive orphan sources.
+Our story begins at the EMF Camp 2024 Swap Shop - your premier source for pre-loved game consoles, cardboard boxes full of 56k modems, and radioactive orphan sources.
 
 ![The EMF Wii being rescued from the Swap Shop](emf-wii.jpg)
 
@@ -38,7 +38,7 @@ I picked this up expecting to use it for homebrew games and emulation mostly, bu
 ### Is it fast enough?
 So we have a spare Wii. And an OS with mainline support. But is a Wii actually fast enough to handle this as a production workload?
 
-The single-core 'Broadway' CPU in the Wii is part of IBM's continued evolution of the PowerPC 750 lineup, dating all the way back to Apple's original 1998 Bondi Blue fishtank iMac. Although Broadway is one of the later 750 revisions, the commercially-available equivalent chip - the PowerPC 750CL - has a maximum TDP of only 9.8 W, and clocks about 33% higher than the version in the Wii.
+The single-core 'Broadway' CPU in the Wii is part of IBM's continued evolution of the PowerPC 750 lineup, dating all the way back to Apple's iconic 1998 Bondi Blue fishtank iMac. Although Broadway is one of the later 750 revisions, the commercially-available equivalent chip - the PowerPC 750CL - has a maximum TDP of only 9.8 W, and clocks about 33% higher than the version in the Wii.
 
 So with a single-core chip based on a late-90s architecture and a TDP well under 10 W, it's clear that we're probably fairly contstrained here in terms of compute performance.
 
