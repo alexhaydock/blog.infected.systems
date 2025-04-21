@@ -150,7 +150,7 @@ To compensate, I cheated by adding `ntp -g` to the main `crontab`, so the system
 
 Even after freeing up the resources above, it seems like serving multiple encrypted requests in parallel was a struggle for the 750, so I opted to move the TLS termination for the blog to a Caddy instance sitting in front of the Wii.
 
-I have Caddy acting as a reverse proxy to the Wii, handling encryption and cert management with ACME. **Importantly, there are no caching options enabled in Caddy. Every request the site serves is being served directly by the Wii** - including the large number of images on this post which I'll almost certainly regret adding. I optimised as much as I could, but this page is still almost exactly 1 MB when all of the content is loaded.
+I have Caddy acting as a reverse proxy to the Wii, handling encryption and cert management with ACME. **Importantly, there are no caching options enabled in Caddy. Every request the site serves is being serviced directly by the Wii** - including the large number of images on this post which I'll almost certainly regret adding. I optimised as much as I could, but this page is still almost exactly 1 MB when all of the content is loaded.
 
 ![Shitpost diagram of Caddy reverse proxy](caddy.jpg)
 
