@@ -9,7 +9,7 @@ tags = ['netbsd', 'shitpost']
 {{< box important >}}
 If you are reading this message, the experiment below is still ongoing. This page was served to you by a real Nintendo Wii.
 
-You can check the Wii's [live status page](https://blog.infected.systems/status) for system load info.
+You can check the Wii's [live status page](/status) for system load info.
 {{< /box >}}
 
 For a long time, I've enjoyed the idea of running general-purpose operating systems on decidedly not-general-purpose hardware.
