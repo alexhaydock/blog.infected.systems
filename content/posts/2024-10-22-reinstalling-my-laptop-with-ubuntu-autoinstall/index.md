@@ -19,7 +19,7 @@ But wait... passing a YAML file to a system to configure it during install?
 
 If you're familiar with `cloud-init`, this is all probably sounding quite familiar. But, alas, `autoinstall` is not _quite_ `cloud-init`. There's definitely a lot of overlap in structure and naming scheme, but they're (slightly) different beasts.
 
-I don't think this is something that the documentation makes adequately clear and I found myself struggling through a lot of different docs and forum posts while trying to piece together working configs in the past. One of the things I like when experimenting with a new feature is when guides and tutorials provide a _complete, working_ example I can work back from, rather than a set of jigsaw pieces that need fitting together. With that in mind, you can scroll to the bottom of this post or [look here](https://infected.systems/t480.yaml) for a fully working example that I used to reinstall the laptop I'm writing this post on.
+I don't think this is something that the documentation makes adequately clear and I found myself struggling through a lot of different docs and forum posts while trying to piece together working configs in the past. One of the things I like when experimenting with a new feature is when guides and tutorials provide a _complete, working_ example I can work back from, rather than a set of jigsaw pieces that need fitting together. With that in mind, you can scroll to the bottom of this post or [look here](/t480.yaml) for a fully working example that I used to reinstall the laptop I'm writing this post on.
 
 ### Why?
 #### Reproducibility
@@ -60,7 +60,7 @@ Hopefully it serves as a useful starting point to configure further.
 
 Please be aware that if you use this file directly and you have a drive at `/dev/nvme0n1` it **will be wiped**, so I can't encourage using this without editing it!
 
-Similarly, I host this file on the public internet [here](https://infected.systems/t480.yaml) for easy access during install. For this reason, the default encryption and user passwords are just `password` and I rotate them after install. I'd recommend doing similar if you host your YAML file anywhere public. There are some instructions in the comments of the file on rotating the password used for disk encryption.
+Similarly, I host this file on the public internet [here](/t480.yaml) for easy access during install. For this reason, the default encryption and user passwords are just `password` and I rotate them after install. I'd recommend doing similar if you host your YAML file anywhere public. There are some instructions in the comments of the file on rotating the password used for disk encryption.
 
 #### Fully working example
 ```yaml

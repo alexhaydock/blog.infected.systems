@@ -42,6 +42,20 @@ Once the script is downloaded _into the WSL Ubuntu environment_, execute it with
 
 This script will build and install the ZFS userspace utilities inside the WSL environment, and will also build a kernel for us.
 
+### Note for users on lower-memory (<16 GB) systems
+If you are running on a system with under 16 GB RAM, Windows may not allocate enough RAM to the WSL2 VM to successfully complete a kernel build. Builds can struggle below about 6 GB so that's the minimum I'd recommend trying with.
+
+You can find out how much RAM your WSL2 environment has by running the following command inside a WSL2 terminal:
+```sh
+free -mh
+```
+
+To resolve this, you can add a line to the `.wslconfig` file in your home directory to give the build environment more RAM:
+```ini
+[wsl2]
+memory=6GB
+```
+
 ### Kernel installation instructions
 Once our new ZFS-powered kernel has been built, the script will output it to `C:\ZFSonWSL\bzImage-new`. It does this to avoid overwriting a running kernel if we're running the script inside a WSL instance that's already using a kernel we built with this script.
 
@@ -50,6 +64,11 @@ We need to shutdown WSL, move the new kernel to `C:\ZFSonWSL\bzImage`, and then 
 Stop the WSL2 VM if it is currently running:
 ```bat
 wsl --shutdown
+```
+
+Move the built kernel to the new location:
+```powershell
+Move-Item -Path C:\ZFSonWSL\bzImage-new -Destination C:\ZFSonWSL\bzImage
 ```
 
 Edit the `.wslconfig` file in your home directory to point to the downloaded kernel:
@@ -63,7 +82,7 @@ swap=0
 Start up WSL again by opening a new WSL session and check that our custom kernel is being used:
 ```text
 $ uname -a
-Linux PrecisionT1700 5.15.167.4-microsoft-standard-WSL2-penguins-rule #4 SMP Sat Nov 23 19:15:47 GMT 2024 x86_64 x86_64 x86_64 GNU/Linux
+Linux t480 6.6.87.2-microsoft-standard-WSL2-with-zfs #1 SMP PREEMPT_DYNAMIC Sat Jul  5 21:11:05 BST 2025 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
 ### Passing through drives (native)
