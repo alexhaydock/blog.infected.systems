@@ -49,8 +49,11 @@ OpenBSD's interface configuration is very simple. As an example, we can configur
 
 ```text
 inet 192.168.100.1 255.255.255.0
-inet6 2001:db8:cafe:beef::1/64
+inet6 2001:db8:cafe:beef::1 64
+inet6 fe80::1 64
 ```
+
+This specifies an IPv6 GUA address that defines the `/64` prefix we will use for devices on this LAN segment, including with SLAAC. It also configures a pretty ULA address (`fe80::1`) for devices to use as their default gateway when on this segment.
 
 ## PPPoE interface configuration
 If we use PPPoE to connect to our ISP, we can configure that using a similar method to above, with a few added lines. This config works to provide full IPv6-support from my ISP:
