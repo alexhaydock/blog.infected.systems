@@ -11,4 +11,4 @@ find ./content/ -iname '*.png' -exec optipng {} \;
 hugo
 
 # Sync site to Wii
-rsync -avsh --delete public/ root@192.168.191.88:/srv/www/htdocs/
+rsync -avsh --delete public/ root@[2a11:f2c0:ffcc::4]:/srv/www/htdocs/

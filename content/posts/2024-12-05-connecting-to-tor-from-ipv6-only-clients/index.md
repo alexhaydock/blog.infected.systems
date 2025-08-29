@@ -28,17 +28,19 @@ We can get Tor working on an IPv6-only client. Adding this option and restarting
 
 I'm currently using this method to host the `.onion` address for this blog. You can visit it using the `.onion` link at the bottom of this page, but it should also send the `Onion-Location` header allowing Tor Browser users to be redirected to it automatically.
 
+If you still experience issues you can try the following config which is even more explicit about enforcing IPv6:
+
+```text
+ClientPreferIPv6DirPort 1
+ClientPreferIPv6ORPort 1
+ClientUseIPv6 1
+ClientUseIPv4 0
+```
+
+You may also find that you need to stop Tor, clear out the contents of `/var/lib/tor`, and then restart the service before it actually starts working (though I don't find this is always the case). I'm not too sure why, but I expect this is needed when the client has already selected and cached a set of persistent IPv4 entry guards.
+
 ### Useful Links
 * [Tor Forum post recommending this solution](https://forum.torproject.org/t/tor-browser-cannot-bootstrap-on-ipv6-only-networks/13301/8)
 * [Tor GitLab issue - 'default clients, including tor browser, fail to bootstrap on an ipv6-only network'](https://gitlab.torproject.org/tpo/core/tor/-/issues/40913)
 * [Tor GitLab issue - 'Add config to prefer IPV6 Address than IPV4'](https://gitlab.torproject.org/tpo/core/tor/-/issues/40838)
 * [Tor Blog from 2021 on 'The State of IPv6 support on the Tor network](https://blog.torproject.org/state-of-ipv6-support-tor-network/)
-
-### Addendum: IPv6 bridges and the Tor Network
-At this time, while there seems to be a [decent amount of focus from the Tor Project on ensuring IPv6-capable relays](https://blog.torproject.org/state-of-ipv6-support-tor-network/), there are (from what I can tell) relatively few IPv6-capable bridges.
-
-I think this is down to the fact that the Tor client isn't able to listen on both IPv4 and IPv6 when setting up an `obfs4` bridge. It can listen on one or the other, but not both at the same time. This is being [tracked in this Tor GitLab issue](https://gitlab.torproject.org/tpo/core/tor/-/issues/40885).
-
-I think this is leading to Tor bridge operators to choose to set their bridges up with IPv4, as that (probably) allows the bridge to have a bigger impact helping censored clients reach the network. This is the same choice I made myself when I set one up recently. Unfortunately, that has the downside of making the pool of IPv6 bridges much smaller, which might lead to an elevated risk for censored users who really _need_ to use an IPv6 bridge to connect.
-
-There's an [open PR to fix this behaviour](https://gitlab.torproject.org/tpo/core/tor/-/merge_requests/786) so hopefully it gets merged soon.
