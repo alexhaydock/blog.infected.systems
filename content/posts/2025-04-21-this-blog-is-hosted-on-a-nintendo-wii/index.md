@@ -126,10 +126,18 @@ Alright, you got me. It turns out that while a PPC 750 might be enough to map th
 
 I tried freeing up resources by disabling a bunch of services I don't need that are running out of the box on NetBSD:
 ```sh
+sed -i 's/^devpubd=.*/devpubd=NO/' /etc/rc.conf || echo 'devpubd=NO' >> /etc/rc.conf
 sed -i 's/^dhcpcd=.*/dhcpcd=NO/' /etc/rc.conf || echo 'dhcpcd=NO' >> /etc/rc.conf
 sed -i 's/^inetd=.*/inetd=NO/' /etc/rc.conf || echo 'inetd=NO' >> /etc/rc.conf
 sed -i 's/^mdnsd=.*/mdnsd=NO/' /etc/rc.conf || echo 'mdnsd=NO' >> /etc/rc.conf
 sed -i 's/^postfix=.*/postfix=NO/' /etc/rc.conf || echo 'postfix=NO' >> /etc/rc.conf
+```
+
+I also found that the default mailer config used sendmail, which meant processes on the system periodically starting `sendmail` and `postdrop` (both part of Postfix). I disabled this in `/etc/mailer.conf`:
+```sh
+sendmail   /bin/true
+mailq      /bin/true
+newaliases /bin/true
 ```
 
 I also disabled `ntpd`, which was using a staggering 15% of the whole system's RAM:
