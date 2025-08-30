@@ -32,3 +32,9 @@ sudo dnf install -y dnf5-plugin-automatic && echo -e '[commands]\napply_updates 
 ```sh
 sudo dnf install -y dnf5-plugin-automatic && echo -e '[commands]\napply_updates = yes\nreboot = when-needed' | sudo tee /etc/dnf/automatic.conf && sudo systemctl enable --now dnf5-automatic.timer
 ```
+
+## Configure Chrony with NTS time sources
+Based on the config from GrapheneOS. Tested on Proxmox and Fedora.
+```sh
+sudo systemctl stop chrony && echo -e 'server time.cloudflare.com iburst nts\nserver ntppool1.time.nl iburst nts\nserver nts.netnod.se iburst nts\nserver ptbtime1.ptb.de iburst nts\nserver time.dfm.dk iburst nts\nserver time.cifelli.xyz iburst nts\nminsources 3\nauthselectmode require\ndscp 46\ndriftfile /var/lib/chrony/drift\ndumpdir /var/lib/chrony\nntsdumpdir /var/lib/chrony\nleapseclist /usr/share/zoneinfo/leap-seconds.list\nmakestep 1 3\nrtconutc\nrtcsync\ncmdport 0\nnoclientlog' | sudo tee /etc/chrony/chrony.conf && sudo systemctl start chrony
+```
