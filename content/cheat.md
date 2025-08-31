@@ -8,6 +8,11 @@ My cheatsheet of useful (or semi-useful) commands.
 
 Most of these are focused on bootstrapping or setting up new or temporary systems where I don't yet have all my documentation available / synced.
 
+## GNOME - Scale text to 140%
+```sh
+gsettings set org.gnome.desktop.interface text-scaling-factor 1.4
+```
+
 ## Ubuntu - Enable automatic upgrades (no auto reboot)
 ```sh
 sudo apt install -y unattended-upgrades && echo -e 'APT::Periodic::Update-Package-Lists "1";\nAPT::Periodic::Unattended-Upgrade "1";' | sudo tee /etc/apt/apt.conf.d/20auto-upgrades && echo -e 'Unattended-Upgrade::Origins-Pattern {\n        "origin=*";\n};\n\nUnattended-Upgrade::Package-Blacklist {\n};' | sudo tee /etc/apt/apt.conf.d/50unattended-upgrades && sudo systemctl enable --now apt-daily.timer && sudo systemctl enable --now apt-daily-upgrade.timer && sudo systemctl enable --now unattended-upgrades.service
