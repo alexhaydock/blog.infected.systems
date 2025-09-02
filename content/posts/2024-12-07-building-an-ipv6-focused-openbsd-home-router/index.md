@@ -115,7 +115,7 @@ Setting up a NAT64 PLAT in OpenBSD `pf` looks like this:
 
 ```text
 [...]
-pass in on $lan inet6 from any to 64:ff9b::/96 af-to inet from (egress:0)
+pass in on $lan inet6 from any to 64:ff9b::/96 af-to inet from (egress:0) keep state
 [...]
 ```
 
