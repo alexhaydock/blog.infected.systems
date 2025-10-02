@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Check deps
+if ! command -v optipng >/dev/null 2>&1; then echo "Missing optipng package" && exit 1; fi
+if ! command -v hugo >/dev/null 2>&1; then echo "Missing hugo package" && exit 1; fi
+
 # Recursively update Git submodules
 git submodule update --init --recursive
 
