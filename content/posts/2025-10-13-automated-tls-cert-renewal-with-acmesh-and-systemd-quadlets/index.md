@@ -148,7 +148,7 @@ Seemingly we can't `systemctl enable` a Quadlet service because it's dynamically
 ### Enable Podman auto-update to update the base container
 One of my other favourite features of Podman is native support for automatic container updates. Previously in Docker I'd have done this with something like Watchtower, which is its own container that requires mounting the `docker.sock` -- something which involves adding far too much complexity and attack surface for something which could just be a native feature. In Podman, it is.
 
-Any container which is labeled `io.containers.autoupdate=registry` (as we've done to ours in the container unit above) will be automatically updated on a schedule from the upstream registry.
+Any container which is labeled `io.containers.autoupdate=registry` (as we've done in the container unit above) will be automatically updated on a schedule from the upstream registry.
 
 To make this happen, we just need to enable `podman-auto-update.timer`:
 ```sh
@@ -170,7 +170,7 @@ server {
 }
 ```
 
-### Caveats
+## Caveats
 Hopefully the info here helps someone at some point, but I wanted to add some usual caveats to this post.
 * This post is very homelab-focused. It's probably not something you want to do in an enterprise setting.
 * Depending on your threat model, I don't necessarily recommend using containers with the `:latest` tag and pulling updates to them automatically. For a more conservative approach, since `acme.sh` has no external dependencies, it would be possible to download and pin a "known-reviewed" version of the code for deployment across your infrastructure.
