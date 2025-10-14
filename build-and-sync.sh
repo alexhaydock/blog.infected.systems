@@ -11,6 +11,9 @@ git submodule update --init --recursive
 # Optimise images
 find ./content/ -iname '*.png' -exec optipng {} \;
 
+# Remove existing output dir
+rm -rv "${PWD}/public/"
+
 # Build site
 hugo
 
