@@ -34,6 +34,8 @@ On my freshly-deployed Alpine LXC container on my Proxmox host:
 apk --no-cache add apk-cron openssh-server
 ```
 
+And that's it. That's pretty much the whole setup.
+
 This installs the OpenSSH Server we need, along with `apk-cron`, which will (without any further config!) set up the system to automatically update packages on a daily basis.
 
 We can start and enable the SSH service with:
@@ -42,7 +44,7 @@ We can start and enable the SSH service with:
 rc-update add sshd && rc-service sshd start
 ```
 
-Since I'm running this inside an LXC container on Proxmox, there's one more step I need to complete. This involves entering the Proxmox shell and bind-mounting a directory on the host into my container.
+Since I'm running this inside an LXC container on Proxmox, the only other thing I need to do is ensure that my container can access the storage on the host. This involves entering the Proxmox shell and bind-mounting a directory on the host into my container.
 
 In this example, we're setting `mp0` (mountpoint 0) for the container with PVE ID `103` to `/zpools/media`.
 
