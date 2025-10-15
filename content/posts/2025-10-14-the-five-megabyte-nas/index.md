@@ -44,7 +44,7 @@ rc-update add sshd && rc-service sshd start
 
 Since I'm running this inside an LXC container on Proxmox, there's one more step I need to complete. This involves entering the Proxmox shell and bind-mounting a directory on the host into my container.
 
-In this example, we're setting `mp0` (mountpoint 0) for the container with PVE ID `103` to `/zpools/data/media`.
+In this example, we're setting `mp0` (mountpoint 0) for the container with PVE ID `103` to `/zpools/media`.
 
 ```sh
 pct set 103 -mp0 /zpools/media,mp=/zpools/media
