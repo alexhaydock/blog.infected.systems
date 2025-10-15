@@ -12,7 +12,7 @@ This is my NAS. It averages somewhere between 4 MB and 12 MB of RAM when running
 
 Of course this is not _quite_ the full story. This "NAS" is an LXC container on top of Proxmox, and Proxmox underneath is doing the heavy lifting of providing our kernel and managing the ZFS filesystem that's storing our content.
 
-But before you cry clickbait -- I want this post to serve mostly as a showcase of how SSHFS can be used to create a very minimal network-mountable-disk setup that's usable like a regular NAS without needing to worry about heavy WebUIs, large attack surfaces, and (critically) without having to learn the dark arts of Samba permissions or NFSv4 ACLs.
+But before you cry clickbait -- I want this post to serve mostly as a showcase of how SSHFS can be used to create an extremely minimal network-mountable-disk setup that's usable like a regular NAS without needing to worry about heavy WebUIs, large attack surfaces, and (critically) without having to learn the dark arts of Samba permissions or NFSv4 ACLs.
 
 In my case, this article will focus on my approach using a very minimal Alpine Linux container on top of Proxmox -- but the concepts here can be generalised to mostly any Linux or BSD setup. The only requirements are:
 * Some storage somewhere on your server
@@ -79,7 +79,7 @@ Host nas.infected.systems
 ### Managing permissions
 One of the reasons I like the SSHFS approach is that permission management can be done with standard Unix/Linux permission controls. When you mount a network share over SSHFS, you have access to whatever files the user you SSH'd into has access to. Simple!†
 
-If you're using the same method as me, layering a very minimal LXC container on top of a system that's already managing your storage, you even go as far as to add more containers to create further separation. Each container could have different directories bind-mounted into it, and different users/SSH keys whitelisted. This reduces the blast-radius of compromised credentials since each container can only see what's bind mounted into it, even if elevated all the way to root. Plus when they use like 5 MB RAM and 20 MB on-disk you can afford to add plenty if you like.
+If you're using the same method as me -- layering a very minimal LXC container on top of a system that's already managing your storage -- you can even create further separation by simply adding more containers. Each container could have different directories bind-mounted into it, and different users/SSH keys whitelisted. This reduces the blast-radius of compromised credentials since each container can only see what's bind mounted into it, even if elevated all the way to root. Plus when they use like 5 MB RAM and 20 MB on-disk you can afford to add plenty if you like.
 
 †Well, certainly simpler than Samba / NFSv4 ACLs, that's for sure.
 
