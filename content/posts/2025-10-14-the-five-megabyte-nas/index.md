@@ -93,7 +93,9 @@ dnf install -y sshfs
 ```
 
 ```sh
-sshfs -o reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user "user@nas.infected.systems:/zpools/media" "${HOME}/zpools/media"
+sshfs -o reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user \
+  "user@nas.infected.systems:/zpools/media" \
+  "${HOME}/zpools/media"
 ```
 
 This mounts the network share into my home directory, using a few useful options to make the mountpoint more robust against things like network disruption or coming in/out of sleep mode:
@@ -143,7 +145,11 @@ WantedBy=default.target
 Now we can enable and start the mount, which will ensure it starts automatically on boot:
 
 ```sh
-systemctl --user daemon-reload && systemctl --user enable --now var-home-user-zpools-data-media.mount
+systemctl --user daemon-reload
+```
+
+```sh
+systemctl --user enable --now var-home-user-zpools-data-media.mount
 ```
 
 Note that although the systemd mount _unit_ will start on boot, the actual network share may not fully mount until a process attempts to access something within the destination path, since we have specified `x-systemd.automount` in our `Options=` above.
@@ -181,7 +187,11 @@ But since we're intending to transfer large amounts of data through our SSH conn
 We can force the preference to `aes128-gcm` as follows:
 
 ```sh
-echo "Ciphers aes128-gcm@openssh.com" > /etc/ssh/sshd_config.d/99-use-aes-128-ciphers.conf && rc-service sshd restart
+echo "Ciphers aes128-gcm@openssh.com" > /etc/ssh/sshd_config.d/99-use-aes128.conf
+```
+
+```sh
+rc-service sshd restart
 ```
 
 Bear in mind that what we're doing here is overriding the cipher preference order set upstream by the very sensible and intelligent folk at the OpenSSH project. AES-128 is by no means weak or broken, but I'm making the assumption here that this is being done in a home environment where access is already restricted. In other scenarios, it's probably better not to touch these settings.
