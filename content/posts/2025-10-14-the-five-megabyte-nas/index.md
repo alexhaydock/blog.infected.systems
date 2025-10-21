@@ -149,7 +149,7 @@ systemctl --user daemon-reload
 ```
 
 ```sh
-systemctl --user enable --now var-home-user-zpools-data-media.mount
+systemctl --user enable --now home-user-zpools-media.mount
 ```
 
 Note that although the systemd mount _unit_ will start on boot, the actual network share may not fully mount until a process attempts to access something within the destination path, since we have specified `x-systemd.automount` in our `Options=` above.
