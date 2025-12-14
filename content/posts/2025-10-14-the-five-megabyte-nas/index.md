@@ -15,8 +15,8 @@ Of course this is not _quite_ the full story. This "NAS" is an LXC container on 
 But before you cry clickbait -- I want this post to serve mostly as a showcase of how SSHFS can be used to create an extremely minimal network-mountable-disk setup that's usable like a regular NAS without needing to worry about heavy WebUIs, large attack surfaces, and (critically) without having to learn the dark arts of Samba permissions or NFSv4 ACLs.
 
 In my case, this article will focus on my approach using a very minimal Alpine Linux container on top of Proxmox -- but the concepts here can be generalised to mostly any Linux or BSD setup. The only requirements are:
-* Some storage somewhere on your server
-* An SSH server
+* Some storage somewhere on your host
+* An SSH server installed
 
 That's pretty much it.
 
@@ -182,7 +182,7 @@ If using WSL, you could also just install SSHFS within the WSL environment and m
 ### Performance tweaks
 SSHFS is already natively very fast, but modern SSH [tends to prefer](https://man.openbsd.org/sshd_config.5#Ciphers) the `chacha20-poly1305` cipher when negotiating connections. This seems to be good on mobile devices without AES-NI acceleration, and desktop CPUs will have no trouble with this anyway for regular SSH activity like remote shells.
 
-But since we're intending to transfer large amounts of data through our SSH connection, it might make sense to force the server to prefer a cipher which will be accelerated by AES-NI on most desktop/laptop clients.
+But since we're intending to transfer large amounts of data through our SSH connection, it might make sense to force the server to prefer a cipher which will be accelerated by AES-NI on most desktop/laptop clients, as well as on the server itself.
 
 We can force the preference to `aes128-gcm` as follows:
 

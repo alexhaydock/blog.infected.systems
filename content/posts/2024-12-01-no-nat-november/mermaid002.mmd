@@ -1,0 +1,5 @@
+flowchart LR
+  subgraph Device
+    A[App] <--IPv4--> B[IPv4 stack<br>on device] <--IPv4--> C[CLAT<br>on device]
+  end
+  C <--IPv6--> D[NAT64 gateway<br>aka PLAT] <--IPv4--> E[IPv4 internet]

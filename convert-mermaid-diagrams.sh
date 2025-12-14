@@ -2,16 +2,8 @@
 set -euo pipefail
 
 # Check deps
-if ! command -v optipng >/dev/null 2>&1; then echo "Missing optipng package" && exit 1; fi
-if ! command -v hugo >/dev/null 2>&1; then echo "Missing hugo package" && exit 1; fi
 if ! command -v mmdc >/dev/null 2>&1; then echo "Missing mmdc package" && echo "Install with:" && echo "  sudo npm install -g @mermaid-js/mermaid-cli" && exit 1; fi
 if ! command -v chromium-browser >/dev/null 2>&1; then echo "Missing Chromium for Mermaid conversion" && echo "Install with:" && echo "  sudo dnf install chromium" && exit 1; fi
-
-# Recursively update Git submodules
-git submodule update --init --recursive
-
-# Optimise images
-find ./content/ -iname '*.png' -exec optipng {} \;
 
 # Convert Mermaid diagrams in-place with mmdc for dark and light modes
 find ./content/ -iname '*.mmd' -exec sh -c '
@@ -25,12 +17,3 @@ find ./content/ -iname '*.mmd' -exec sh -c '
     mmdc -p ./puppeteer-config.json -t default -b transparent -i "$f" -o "${base}_light.svg"
   done
 ' sh {} +
-
-# Remove existing output dir
-rm -rv "${PWD}/public/"
-
-# Build site
-hugo
-
-# Sync site to Wii
-rsync -e 'ssh -p 38000' -avsh --delete public/ root@[2a11:f2c0:ffcc::4]:/srv/www/htdocs/

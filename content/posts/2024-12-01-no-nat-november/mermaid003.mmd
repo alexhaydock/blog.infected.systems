@@ -1,0 +1,6 @@
+flowchart TD
+    subgraph Smooth Transitional Phase
+      B -- fix anything that breaks --> C(Deploy NAT64+PREF64) -- fix anything that breaks --> D(Deploy DNS64) -- fix anything that breaks --> E(Deploy DHCP Op108) -- fix anything that breaks --> v6m[IPv6-mostly] -- wait for DHCPv4 leases to reach zero --> F(Deprecate DHCPv4)
+    end
+    A[IPv4-only] --> B[Deploy Dual Stack]
+    F --> G[IPv6-only]

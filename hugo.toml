@@ -27,6 +27,11 @@ term = ['html']
   [markup.highlight]
     noClasses = false
 
+# Enable raw HTML so we can use our clever <picture> tags for choosing
+# between light and dark versions of our Mermaid SVGs
+[markup.goldmark.renderer]
+unsafe = true
+
 # Header
 [menu]
   [[menu.main]]
