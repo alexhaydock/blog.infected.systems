@@ -46,6 +46,8 @@ The commit message suggests:
 
 With `podman` and `buildah` being Ubuntu Universe packages, and Ubuntu 26.04 on the horizon, I don't think Canonical are particularly motivated to fix this one.
 
+We're also a bit stuck with Ubuntu, since it's [the only Linux distro](https://docs.github.com/en/actions/reference/runners/github-hosted-runners) available on GitHub's free public runners.
+
 ## Forcing Podman to update
 
 To solve this, we can do something slightly cursed and ill-advised (but which does work!).
@@ -62,9 +64,9 @@ Adding this step to an Actions workflow allows us to bring in the Podman package
 
 You can see an example of a full Actions workflow with this fix [in my NekOS repo here](https://github.com/alexhaydock/NekOS/blob/bd84d1c02a2852af356992107ed8d414eafe4bcc/.github/workflows/build.yml).
 
-No doubt the other packages that get updated in the course of this may break in various subtle ways if you're doing anything other than building Podman packages in your Actions workflow.
+No doubt the other packages that get updated when we do this may break in various subtle ways if you're doing anything other than building Podman containers in your Actions workflow. But if you _are_ just building Podman containers, this is probably the easiest way of getting newer Podman versions.
 
-There are maybe cleaner options available -- like building the latest Podman and supporting packages from source, or forcing the runner to complete a full Ubuntu version upgrade during the Actions run -- but I discounted both as taking too much time and effort.
+There are also probably cleaner options available -- like building the latest Podman and supporting packages from source, or forcing the runner to complete a full Ubuntu version upgrade during the Actions run -- but I discounted both as taking too much time and effort.
 
 With that in mind, I'm coining the term [Frankenbuntu](https://wiki.debian.org/DontBreakDebian#Don.27t_make_a_FrankenDebian) for this one, and officially advising you not to do it. But it does work...
 
