@@ -17,7 +17,7 @@ The heredoc syntax can make things much easier to read, without needing to creat
 
 Here's a nice example:
 ```dockerfile
-FROM docker.io/library/alpine:edge
+FROM docker.io/library/alpine:latest
 
 RUN <<EOF
 apk --no-cache add alpine-sdk
@@ -28,7 +28,7 @@ EOF
 
 It also supports inline build arguments, which is pretty neat:
 ```dockerfile
-FROM docker.io/library/alpine:edge
+FROM docker.io/library/alpine:latest
 
 RUN --network=none <<EOF
 make -j4
