@@ -2,10 +2,10 @@
 
 Repository for https://blog.infected.systems
 
-### Refresh Git submodules for themes & addons
-```sh
-git submodule update --init --recursive
-```
+### Catpuccin-based Colour Scheme
+* Light Mode (Default): Latte
+* Dark Mode: Frappé
+* Code Blocks: Mocha
 
 ### Install Hugo
 ```sh

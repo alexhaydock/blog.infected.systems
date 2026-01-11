@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en-us" }}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- <style type=text/css>body{font-family:monospace;}</style> -->
+	<title>{{ .Title }}</title>
+	{{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
+	{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
+
+    <!-- Load our custom CSS from the assets/css directory and pass it through Hugo's minifier
+	     pipeline as seen in this blog post: https://digitaldrummerj.me/hugo-asset-pipeline/ -->
+	{{ $css := resources.Get "css/style.css" | minify }}
+	<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+
+	{{ range .Site.Params.customCSS -}}
+		<link rel="stylesheet" href="{{ . | relURL }}?rnd={{ now.Unix }}">
+	{{- end }}
+	{{ with .OutputFormats.Get "RSS" -}}
+		{{ printf `<link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .RelPermalink $.Site.Title | safeHTML }}
+	{{- end }}
+
+	<!-- Favicon, Apple iOS icon, and Web Application Manifest -->
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+	<link rel="icon" href="/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link rel="manifest" href="/manifest.webmanifest">
+
+	{{ with .Site.Params.webmentionURL }}<link rel="webmention" href="{{ . }}" />{{ end }}
+</head>
+<body>
+	{{ partial "header" . }}
+	{{ block "main" . }}{{ end }}
+	{{ partial "footer" . }}
+</body>
+{{ if .Page.Store.Get "hasMermaid" }}
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+	const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	mermaid.initialize({
+		startOnLoad: true,
+		theme: isDarkMode ? "dark" : "forest",
+	});
+</script>
+{{ end }}
+</html>

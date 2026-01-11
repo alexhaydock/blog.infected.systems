@@ -1,0 +1,21 @@
+<header>
+	<h1>
+		<!-- Hide favicon for screen readers and text-mode browsers -->
+		<img class="siteicon" src="/favicon.svg" alt="" aria-hidden="true">
+		{{ .Site.Title }}
+	</h1>
+	<nav>
+		<a href="/"><b>Home</b></a>
+		{{ with .Site.Menus.main }}
+			{{ range . }}
+				| <a href="{{ .URL | relURL }}"><b>{{ .Name }}</b></a>
+			{{ end }}
+		{{ end }}
+		{{ with .Site.Menus.social }}
+			{{ range . }}
+				<!-- Include rel="me" verification tag in social linkbacks -->
+				| <a rel="me" href="{{ .URL }}"><b>{{ .Name }}</b></a>
+			{{ end }}
+		{{ end }}
+	</nav>
+</header>

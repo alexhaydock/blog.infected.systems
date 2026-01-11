@@ -1,7 +1,7 @@
 baseURL = 'https://blog.infected.systems/'
 languageCode = 'en-gb'
 title = 'Alex Haydock'
-theme = ["hugo-shortcode-roneo-collection", "smol-bean"]
+theme = ["smol-bean"]
 
 # Parameters
 [params]
@@ -64,23 +64,13 @@ unsafe = true
         url = "/about/"
         weight = 4
 
-# Footer
-  [[menu.footer]]
+# Socials
+  [[menu.social]]
         name = "GitHub"
         url = "https://github.com/alexhaydock"
         weight = 1
 
-    [[menu.footer]]
+    [[menu.social]]
         name = "Mastodon"
         url = "https://infosec.exchange/@alexhaydock"
         weight = 2
-
-    [[menu.footer]]
-        name = ".onion"
-        url = "http://infected2ffce6vfaeuah77ooambvlj7ne7roujuvpqvb54ha5wbjnad.onion"
-        weight = 3
-
-    [[menu.footer]]
-        name = "RSS"
-        url = "/posts/index.xml"
-        weight = 4
