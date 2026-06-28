@@ -1,0 +1,43 @@
+FROM ghcr.io/mermaid-js/mermaid-cli/mermaid-cli as buildsite
+
+# Return to rootful user so we can install packages
+# and avoid permission errors when mounting our
+# local working directory
+USER root
+
+# Install Hugo & other deps
+RUN apk --no-cache add \
+      hugo \
+      optipng
+
+# Copy blog content into build container
+COPY . /opt/blog
+WORKDIR /opt/blog
+
+RUN <<EOF
+# Optimise images
+find ./content/ -iname '*.png' -exec optipng {} \;
+
+# Convert Mermaid diagrams in-place with mmdc for dark and light modes
+find ./content/ -iname '*.mmd' -exec sh -c '
+  for f do
+    base="${f%.mmd}"
+    # Dark mode
+    /home/mermaidcli/node_modules/.bin/mmdc -p /puppeteer-config.json -t dark -b transparent -i "$f" -o "${base}_dark.svg"
+    # Light mode
+    /home/mermaidcli/node_modules/.bin/mmdc -p /puppeteer-config.json -t default -b transparent -i "$f" -o "${base}_light.svg"
+  done
+' sh {} +
+
+# Remove output dir if present
+if [ -d /opt/blog/public/ ]; then
+  rm -rv "/opt/blog/public/"
+fi
+
+# Build site with hugo
+mkdir -p /opt/blog/public
+hugo
+EOF
+
+FROM scratch
+COPY --from=buildsite /opt/blog/public /site

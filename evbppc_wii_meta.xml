@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<app version="1">
+  <name>blog.infected.systems</name>
+  <author>Alex Haydock</author>
+  <version></version>
+  <release_date></release_date>
+  <short_description>My blog, running on NetBSD.</short_description>
+  <long_description>My blog, running on a customised NetBSD image with injected webserver and bird config.</long_description>
+  <arguments>
+    <arg>root=ld0</arg>
+  </arguments>
+  <ahb_access/>
+</app>

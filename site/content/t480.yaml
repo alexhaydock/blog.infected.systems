@@ -1,0 +1,67 @@
+autoinstall:
+  version: 1
+
+  source:
+    id: ubuntu-desktop-minimal
+
+  locale: en_GB.UTF-8
+  keyboard:
+    layout: us  # Typically would use 'gb' but my T480 has a US keyboard
+  timezone: Europe/London
+
+  storage:
+    layout:
+      name: zfs
+      # Ubuntu uses a ZFS keyfile to unlock the main pool.
+      # This keyfile is stored on a LUKS volume which is actually a ZFS ZVOL that's kept at `rpool/keystore`.
+      # Thus, to change the ZFS unlock password after install, we need to use:
+      #     sudo cryptsetup luksChangeKey /dev/zvol/rpool/keystore
+      # on the installed and booted system.
+      password: password  # LUKS2 password - will need rotating post-install
+      match:
+        path: /dev/nvme0n1
+
+  identity:
+    hostname: t480
+    username: user
+    password: "$6$AEzzJzqYSLoOU..B$9eBMwzAStDHZaHlNPrjJ12zq2WkHVgpmTsGbuxEdQzCOKKTN1wXKzrBLjazOavFb6u19jWALrCyEqBW9rzTNA0"  # 'password'
+
+  # This ssh daemon config gets written to /etc/ssh/sshd_config.d/50-cloud-init.conf on the installed system
+  ssh:
+    install-server: true
+    allow-pw: false
+    authorized-keys: []
+
+  packages:
+    - distrobox               # universe
+    - flatpak                 # universe
+    - git                     # main
+    - podman                  # universe
+    - ufw                     # main
+    - unattended-upgrades     # main
+    - wireshark               # universe
+
+  snaps:
+    - name: bitwarden
+    - name: libreoffice
+
+  late-commands:
+    # Configure unattended-upgrades to upgrade all packages when it runs (not just security updates)
+    # Normally we'd invoke this with the -e flag but for some reason if we do that then the -e flag
+    # ends up being treated as part of the string and echoed into the destination file
+    - echo 'Unattended-Upgrade::Origins-Pattern {\n        "origin=*";\n};\n\nUnattended-Upgrade::Package-Blacklist {\n};' | /usr/bin/tee /target/etc/apt/apt.conf.d/50unattended-upgrades
+    # Remove desktop update notifier application
+    - curtin in-target --target=/target -- apt-get purge -y --quiet=2 update-notifier update-notifier-common
+    # Clean up apt with an autoremove and clean
+    - curtin in-target --target=/target -- apt-get autoremove -y --quiet=2 --purge
+    - curtin in-target --target=/target -- apt-get clean
+    # Enable Flathub
+    - curtin in-target --target=/target -- flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    # Configure UFW on the target system with a basic default of only ingress SSH being allowed
+    - curtin in-target --target=/target -- ufw --force reset
+    # We need to run the following commands inside chroot instead of curtin because they depend on
+    # inserting the ip6_tables kernel module in order to successfully run and that module doesn't
+    # seem to actually ship on the ISO inside the installer environment. So we chroot into our
+    # installed system where we definitely have the module available in order to run these commands.
+    - chroot /target /usr/sbin/ufw limit ssh
+    - chroot /target /usr/sbin/ufw enable

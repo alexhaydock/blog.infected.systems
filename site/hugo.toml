@@ -1,0 +1,76 @@
+baseURL = 'https://blog.infected.systems/'
+languageCode = 'en-gb'
+title = 'Alex Haydock'
+theme = ["smol-bean"]
+
+# Parameters
+[params]
+    # I have no idea why Hugo declares the date format this way using a specific example date, but
+    # this string seems to give us RFC 3339 / ISO-8601 YYYY-MM-DD dates correctly so I'll just accept it
+    dateFmt = "2006-01-02 15:04"
+    webmentionURL = 'https://webmention.io/blog.infected.systems/webmention'
+
+# Disable RSS output format for all page kinds in global config
+# (we re-enable it just for blog posts so we don't include every page in the feed)
+[outputs]
+home = ['html']
+section = ['html']
+taxonomy = ['html']
+term = ['html']
+
+[taxonomies]
+  tag = 'tags'
+
+# Ensure that Hugo doesn't try to use inline CSS for our syntax highlighting.
+# (We've got that covered manually in our theme's CSS)
+[markup]
+  [markup.highlight]
+    noClasses = false
+
+# Enable raw HTML so we can use our clever <picture> tags for choosing
+# between light and dark versions of our Mermaid SVGs
+[markup.goldmark.renderer]
+unsafe = true
+
+# Header
+[menu]
+  [[menu.main]]
+        identifier = "posts"
+        name = "Posts"
+        url = "/posts/"
+        weight = 1
+
+#  [[menu.main]]
+#        identifier = "categories"
+#        name = "Categories"
+#        url = "/categories/"
+#        weight = 2
+#
+#  [[menu.main]]
+#        identifier = "tags"
+#        name = "Tags"
+#        url = "/tags/"
+#        weight = 3
+
+  [[menu.main]]
+        identifier = "blogroll"
+        name = "Blogroll"
+        url = "/blogroll/"
+        weight = 3
+
+  [[menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about/"
+        weight = 4
+
+# Socials
+  [[menu.social]]
+        name = "GitHub"
+        url = "https://github.com/alexhaydock"
+        weight = 1
+
+    [[menu.social]]
+        name = "Mastodon"
+        url = "https://infosec.exchange/@alexhaydock"
+        weight = 2
