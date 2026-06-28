@@ -20,8 +20,6 @@ In theory the same image ought to boot on a Wii U too, though I don't have one s
 
 If you want to tweak this for your own uses, all of the customisation lives in `nintendo.conf` in this repo.
 
-You may also want to tweak the `Containerfile` a bit since most of the build happens inside `tmpfs` so the build process alone needs about 10GB of free RAM and will probably break otherwise.
-
 ### Quick build
 To build just the site and sync it to an already-installed system:
 

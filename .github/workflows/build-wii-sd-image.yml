@@ -1,0 +1,38 @@
+---
+name: build-wii-sd-image
+
+on:
+  # Allow manual triggers
+  workflow_dispatch:
+  # Run only on pushes that change the site's content
+  push:
+
+permissions:
+  contents: write
+
+jobs:
+  build_image:
+    name: Build Wii SD card image
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Build with Podman
+        run: |
+          chmod +x ./wii.sh
+          ./wii.sh
+
+      - name: Rename to add current date
+        run: |
+          DATE=$(date +%Y%m%d)
+          mv nintendo.img.gz "wiiblog-${DATE}.img.gz"
+          echo "ASSET=wiiblog-${DATE}.img.gz" >> "$GITHUB_ENV"
+          echo "TAG=${DATE}" >> "$GITHUB_ENV"
+
+      - name: Push image as a GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ env.TAG }}
+          name: Release ${{ env.TAG }}
+          files: ${{ env.ASSET }}

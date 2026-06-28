@@ -2,8 +2,6 @@
 name: test-blog-reachability
 
 on:
-  # Run on pushes to any branch
-  push:
   # Allow manual triggers
   workflow_dispatch:
   # Run every day at 04:44
@@ -13,10 +11,10 @@ on:
 jobs:
   test_site:
     name: Run tests against blog.infected.systems
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install Cloudflare Warp because GitHub still haven't got native IPv6 working which is truly insane
         uses: fscarmen/warp-on-actions@v1.4

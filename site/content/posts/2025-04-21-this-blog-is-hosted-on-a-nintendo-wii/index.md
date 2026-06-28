@@ -153,7 +153,7 @@ Unfortunately it seems `ntpd` is definitely necessary to keep the system clock i
 To compensate, I cheated by adding `ntpd -q -g` to the main `crontab`, so the system would run it hourly at `:42` min past the hour. We still get timesync, but we don't need to sacrifice a sixth of our RAM keeping it resident:
 
 ```text
-42    *       *       *       *       /usr/sbin/ntpd -q -g
+42 * * * * /usr/sbin/ntpd -q -g
 ```
 
 Even after freeing up the resources above, it seems like serving multiple encrypted requests in parallel was a struggle for the 750, so I opted to move the TLS termination for the blog to a Caddy instance sitting in front of the Wii.

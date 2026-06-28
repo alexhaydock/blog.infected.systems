@@ -74,12 +74,15 @@ COPY evbppc_wii_meta.xml /files/evbppc_wii_meta.xml
 COPY nintendo.conf /files/nintendo.conf
 
 # Build step
-# - Mount /opt as tmpfs
-# - Clone the NetBSD sources into it
+# - Clone the NetBSD sources into /opt
 # - Copy our overlay files into the tree
 # - Run the build script
 # - Copy the image out of tmpfs and to the root of the container
-RUN --mount=type=tmpfs,target=/opt <<EOF
+#
+# I don't use tmpfs for /opt anymore for this step since GitHub Actions
+# runners will run out of RAM and throw a "No space left on device"
+# error if we do
+RUN <<EOF
 git clone --depth 1 https://github.com/NetBSD/src.git /opt/netbsd
 cp -fv /files/evbppc_wii_icon.png /opt/netbsd/distrib/utils/embedded/files/evbppc_wii_icon.png
 cp -fv /files/evbppc_wii_meta.xml /opt/netbsd/distrib/utils/embedded/files/evbppc_wii_meta.xml
