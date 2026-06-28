@@ -25,7 +25,7 @@ jobs:
 
       - name: Rename to add current date
         run: |
-          DATE=$(date +%Y%m%d)
+          DATE=$(date +%Y%m%d-%H%M)
           mv nintendo.img.gz "wiiblog-${DATE}.img.gz"
           echo "ASSET=wiiblog-${DATE}.img.gz" >> "$GITHUB_ENV"
           echo "TAG=${DATE}" >> "$GITHUB_ENV"
