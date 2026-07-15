@@ -1,0 +1,4 @@
+FROM docker.io/library/alpine:edge
+RUN apk --no-cache add hugo
+WORKDIR /opt
+ENTRYPOINT ["hugo"]

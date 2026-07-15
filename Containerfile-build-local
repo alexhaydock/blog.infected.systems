@@ -1,0 +1,17 @@
+FROM docker.io/library/alpine:edge as builder
+RUN apk --no-cache add hugo
+
+COPY site/ /opt/site/
+WORKDIR /opt/site
+
+# Add header banner to local built version of site
+RUN <<EOF
+cp /opt/site/themes/smol-bean/layouts/partials/header.html /tmp/header.html
+cat /opt/site/themes/smol-bean/layouts/partials/header-local.html /tmp/header.html | tee /opt/site/themes/smol-bean/layouts/partials/header.html
+EOF
+
+# Build site
+RUN hugo build
+
+FROM scratch
+COPY --from=builder /opt/site/public/ /opt/site/public/
