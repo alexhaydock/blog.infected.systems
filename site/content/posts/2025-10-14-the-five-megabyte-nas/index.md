@@ -138,7 +138,7 @@ Wants=network-online.target
 What=media.infected.systems:/zpools
 Where=/var/home/user/zpools
 Type=fuse.sshfs
-Options=_netdev,reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user,IdentityFile=/var/home/user/.ssh/id_ed25519_Primary,x-systemd.automount
+Options=_netdev,reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user,IdentityFile=/var/home/user/.ssh/id_ed25519_Primary
 TimeoutSec=60
 
 [Install]
@@ -179,7 +179,7 @@ For completeness' sake, I have also done the same config as above declaratively 
           What = "media.infected.systems:/zpools";
           Where = "/home/user/zpools";
           Type = "fuse.sshfs";
-          Options = "_netdev,reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user,IdentityFile=/home/user/.ssh/id_ed25519_Primary,x-systemd.automount";
+          Options = "_netdev,reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user,IdentityFile=/home/user/.ssh/id_ed25519_Primary";
           TimeoutSec = "60";
         };
         Install = {
