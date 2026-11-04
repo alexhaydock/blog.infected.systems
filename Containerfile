@@ -88,9 +88,8 @@ cp -fv /files/evbppc_wii_icon.png /opt/netbsd/distrib/utils/embedded/files/evbpp
 cp -fv /files/evbppc_wii_meta.xml /opt/netbsd/distrib/utils/embedded/files/evbppc_wii_meta.xml
 cp -fv /files/nintendo.conf /opt/netbsd/distrib/utils/embedded/conf/nintendo.conf
 (cd /opt/netbsd && ./build.sh -j$(nproc) -m evbppc -a powerpc release)
-cp -fv /opt/netbsd/obj/releasedir/evbppc/binary/gzimg/nintendo.img.gz /nintendo.img.gz
 EOF
 
 # Dump just the built image out into a fresh scratch container
 FROM scratch
-COPY --from=buildimg /nintendo.img.gz /nintendo.img.gz
+COPY --from=buildimg /opt/netbsd/obj/releasedir/evbppc/binary/gzimg/nintendo.img.gz /nintendo.img.gz
