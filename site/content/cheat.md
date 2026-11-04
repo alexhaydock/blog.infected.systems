@@ -82,8 +82,7 @@ Grumble grumble something something software patents...
 ```sh
 sudo rpm-ostree install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 sudo systemctl reboot
-sudo rpm-ostree override remove totem-video-thumbnailer
-sudo rpm-ostree install ffmpegvideothumbnailer libavcodec-freeworld
+sudo rpm-ostree install ffmpegthumbnailer libavcodec-freeworld
 rm -rf ~/.cache/thumbnails
 sudo systemctl reboot
 ```
