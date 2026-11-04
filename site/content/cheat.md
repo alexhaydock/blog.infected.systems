@@ -86,3 +86,25 @@ sudo rpm-ostree install ffmpegthumbnailer libavcodec-freeworld
 rm -rf ~/.cache/thumbnails
 sudo systemctl reboot
 ```
+
+## Erase YubiKey
+There are only certain YubiKey models that support `ykman config reset` but we can work around this with a script that individually resets all the applications. Insert the key and start this script within 5 seconds:
+```sh
+#!/usr/bin/env bash
+set -xeuo pipefail
+
+# Discover YubiKey serial with `ykman list` and
+# add it here
+export YUBIKEY="26723449"
+
+ykman -d "${YUBIKEY}" fido reset -f
+ykman -d "${YUBIKEY}" hsmauth reset -f
+ykman -d "${YUBIKEY}" oath reset -f
+ykman -d "${YUBIKEY}" openpgp reset -f
+ykman -d "${YUBIKEY}" otp delete 1 || true
+ykman -d "${YUBIKEY}" otp delete 2 || true
+ykman -d "${YUBIKEY}" piv reset -f
+
+# Disable OTP for accidental touches
+ykman -d "${YUBIKEY}" config usb --disable otp
+```
