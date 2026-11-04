@@ -2,7 +2,7 @@
 title = 'This blog is hosted on a Nintendo Wii... in a field'
 date = 2026-07-17T11:23:00Z
 draft = false
-summary = "Round 2"
+summary = "Round 2."
 tags = ['netbsd', 'shitpost']
 +++
 
