@@ -103,7 +103,7 @@ To create a TPM-backed SSH key with a PIN, run:
 ssh-tpm-keygen -N "your-pin"
 ```
 
-The process will ask you where to store the key and whether you wish to set a passphrase for it. From here, once again we have a keypair with a `.pub` file that we can use in `authorized_keys` or copy however we wish.
+The process will ask you where to store the key. From here, once again we have a keypair with a `.pub` file that we can use in `authorized_keys` or copy however we wish.
 
 To use the TPM-backed key we need to use the TPM-aware SSH agent provided by the `ssh-tpm-agent` package. If you installed the native Golang package rather than something vendored by your distribution, you can enable the systemd socket unit for the agent as follows:
 ```sh
@@ -178,7 +178,7 @@ Host blog.infected.systems
 ### Running a Mac in 'clamshell mode'
 If you run your Mac in what Apple calls 'clamshell mode' (i.e. a laptop with the lid shut), then the initial `create-ctk-identity` command will fail with an error like this:
 ```text
-Error: Error Domain=com.apple.LocalAuthentication Code=-4 "Touch ID is not available in closed clamshell mode." UserInfo={BiometryType=1, Subcode=10, NSDebugDescription=Touch ID is not available in closed clamshell mode., NSLocalizedDescription=Authentication canceled.}Error: Error Domain=com.apple.LocalAuthentication Code=-4 "Touch ID is not available in closed clamshell mode." UserInfo={BiometryType=1, Subcode=10, NSDebugDescription=Touch ID is not available in closed clamshell mode., NSLocalizedDescription=Authentication canceled.}
+Error: Error Domain=com.apple.LocalAuthentication Code=-4 "Touch ID is not available in closed clamshell mode." UserInfo={BiometryType=1, Subcode=10, NSDebugDescription=Touch ID is not available in closed clamshell mode., NSLocalizedDescription=Authentication canceled.}
 ```
 
 Unfortunately it seems that keys created with `-t bio` do actually require full TouchID in order to generate or use -- unlike other operations such as unlocking the Safari Keychain or using Apple Pay which fall back to a user password when in clamshell mode.
