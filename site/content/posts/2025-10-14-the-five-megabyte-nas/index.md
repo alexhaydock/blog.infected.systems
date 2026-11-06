@@ -145,7 +145,9 @@ TimeoutSec=60
 WantedBy=default.target
 ```
 
-Now we can enable and start the mount, which will ensure it starts automatically on boot:
+You will notice that the options provided in the mount are very similar to the ones we used above when mounting directly from the CLI. We do have one additional option: `_netdev`. This ensures our mount is treated as a network filesystem (becomes part of `remote-fs.target`) rather than a local filesystem (part of `local-fs.target`, which the system would try and bring up too early).
+
+Once the `.mount` file has been created, we can enable and start the mount, which will ensure it starts automatically on boot:
 
 ```sh
 systemctl --user daemon-reload
