@@ -39,7 +39,7 @@ With a YubiKey (5 and newer), SSH keys can be directly enrolled into the device 
 
 To store a new SSH key on a YubiKey, insert it and run:
 ```sh
-ssh-keygen -t ed25519-sk -O resident -O application="ssh:nameyourkey" -f ~/.ssh/id_ed25519-sk
+ssh-keygen -t ed25519-sk -O resident -O application="ssh:yournamehere" -f ~/.ssh/id_ed25519-sk
 ```
 
 The `application` tag set in the command is arbitrary and can be set to whatever memorable string you prefer to differentiate between multiple SSH keys if you want to create multiple keys on the same YubiKey.
@@ -59,10 +59,10 @@ Note that you don't actually need `ykman` to enrol or use SSH keys with a YubiKe
 Once the key has been created, you can retrieve the public key from disk:
 ```text
 $ cat ~/.ssh/id_ed25519-sk.pub 
-sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIA9B+2GGCkQvBzpa4WobQhfC9YU5Su3pKXBmVLSXEqfRAAAAEHNzaDp5b3VybmFtZWhlcmU= user@hostname
+sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIA9B+2GGCkQvBzpa4WobQhfC9YU5Su3pKXBmVLSXEqfRAAAAEHNzaDp5b3VybmFtZWhlcmU= alice@hostname
 ```
 
-This key can be used like any other SSH public key --  added to `authorized_keys` on a host, copied with `ssh-copy-id`, or pasted into services that depend on SSH like Git forges.
+This key can be used like any other SSH public key -- added to `authorized_keys` on a host, copied with `ssh-copy-id`, or pasted into services that depend on SSH like Git forges.
 
 You will also find a `~/.ssh/id_ed25519-sk` file on disk (without the `.pub` extension). Note that although this _looks_ like a private key, it doesn't actually contain the key material. This is just a handle to find the relevant key on the hardware device.
 
@@ -90,7 +90,7 @@ To use a `no-touch-required` key for unattended authentication to remote servers
 For example:
 ```text
 $ cat ~/.ssh/authorized_keys 
-no-touch-required sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIA9B+2GGCkQvBzpa4WobQhfC9YU5Su3pKXBmVLSXEqfRAAAAEHNzaDp5b3VybmFtZWhlcmU= user@hostname
+no-touch-required sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIA9B+2GGCkQvBzpa4WobQhfC9YU5Su3pKXBmVLSXEqfRAAAAEHNzaDp5b3VybmFtZWhlcmU= alice@hostname
 ```
 
 ## Method 2: TPM
@@ -118,7 +118,7 @@ export SSH_AUTH_SOCK="$(ssh-tpm-agent --print-socket)"
 Again, we can now use this key to authenticate to servers as if it were any other traditional on-disk key.
 
 ### Unattended TPM usage
-If you want this key to be available to services that don't use a full shell, such as [systemd mount units](/posts/2025-10-14-the-five-megabyte-nas/), you can create a new key without a PIN (pass `-N ""` to the `ssh-tpm-keygen` command) and specify the socket path in `~/.ssh/config` instead of relying on `SSH_AUTH_SOCK` (although this relies on the socket address being predictable -- i.e. your UID being stable):
+If you want this key to be available unattended, or to services that don't use a full shell such as [systemd mount units](/posts/2025-10-14-the-five-megabyte-nas/), you can create a new key without a PIN (pass `-N ""` to the `ssh-tpm-keygen` command) and specify the socket path in `~/.ssh/config` instead of relying on `SSH_AUTH_SOCK` (although this relies on the socket address being predictable -- i.e. your UID being stable):
 ```text
 Host blog.infected.systems
     IdentityAgent /run/user/1000/ssh-tpm-agent.sock
@@ -160,13 +160,13 @@ To export a handle to disk that allows OpenSSH to use the key from the secure en
 
 When prompted for a pin during export, you can leave it blank as it isn't used here. A public key and private key handle file will be created on-disk in the `~/.ssh` directory.
 
-Note that the command above will export a key handle for _all of the SSH keys_ you have enrolled in the Secure Enclave (you can create many if desired by repeating the process above). I wasn't able to find a way to export individual key handles [despite Apple's docs suggesting that you should be able to with KEYCHAIN_CERTIFICATES](https://keith.github.io/xcode-man-pages/ssh-keychain.8.html). Your best bet will be to use a clear label using the `-l` flag when creating the key, and avoid creating keys with duplicate labels, as the label is added to the filename when the key handle and pubkey are exported.
+Note that the command above will export a key handle for _all of the SSH keys_ you have enrolled in the Secure Enclave (you can create many if desired by repeating the process above). I wasn't able to find a way to export individual key handles [despite Apple's docs suggesting that you should be able to with KEYCHAIN_CERTIFICATES](https://keith.github.io/xcode-man-pages/ssh-keychain.8.html). Your best bet will be to use a clear label using the `-l` flag when creating the key so you can easily find the handle for it after it has been exported to disk.
 
 Once we have our pubkey and handle file, we can process these as we normally would -- copying the public key to an `authorized_keys` file on a remote host or adding it to whatever services we prefer.
 
 To use SSH keys from the Secure Enclave, we need to set `SSH_SK_PROVIDER` in our shell. We can add this to `~/.zshrc`:
 ```sh
-echo 'export SSH_SK_PROVIDER=/usr/lib/ssh-keychain.dylib' | tee -a ~/.zshrc
+export SSH_SK_PROVIDER=/usr/lib/ssh-keychain.dylib
 ```
 
 After a restart of the shell, the key will work like any other -- though you may need to specify it directly as in my case it wasn't being autodiscovered by macOS's SSH agent:
@@ -186,7 +186,7 @@ Unfortunately it seems that keys created with `-t bio` do actually require full 
 There is an option to use `-t none` to create a key without presence confirmation enabled at all. This carries the same risk as I discussed in the section about using YubiKeys unattended so you'll have to decide whether it works for your risk model.
 
 If, like me, you use the machine in clamshell mode basically all the time there are some alternative options that still retain presence detection though:
-* You could buy one of Apple's [expensive keyboards with Touch ID](https://www.apple.com/uk/shop/product/mxck3b/a/magic-keyboard-with-touch-id-for-mac-models-with-apple-silicon-usb-c-british-english).
+* You could buy one of Apple's [expensive bluetooth keyboards with Touch ID](https://www.apple.com/uk/shop/product/mxck3b/a/magic-keyboard-with-touch-id-for-mac-models-with-apple-silicon-usb-c-british-english).
 * Or, the [YubiKey 5C Nano](https://www.yubico.com/gb/product/yubikey-5c-nano/) is tiny and can sit almost flush in the side of a closed MacBook and can be used with Method 1 including presence detection.
 
 ## Final note
