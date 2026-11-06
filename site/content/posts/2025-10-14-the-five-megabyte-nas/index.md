@@ -60,7 +60,7 @@ In order to access the share, it will be most convenient to do this using SSH ke
 If you don't already have an SSH key added to your destination, you can do this with:
 
 ```sh
-ssh-copy-id -i ~/.ssh/id_ed25519_NAS.pub user@nas.infected.systems
+ssh-copy-id -i ~/.ssh/id_ed25519_NAS.pub bob@nas.infected.systems
 ```
 
 YMMV if you use an SSH key with a passphrase here. On a GNOME system, the methods I use for automounting work just fine with a passphrase-protected key, as long as I connect to the system manually at least once first and allow GNOME Keyring to store the passphrase to unlock the key. But passphrases on keys may become a pain-point depending on your setup.
@@ -94,7 +94,7 @@ dnf install -y sshfs
 
 ```sh
 sshfs -o reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user \
-  "user@nas.infected.systems:/zpools" \
+  "bob@nas.infected.systems:/zpools" \
   "${HOME}/zpools"
 ```
 
@@ -121,7 +121,7 @@ mkdir -p ${HOME}/.config/systemd/user
 And then, we create a mount unit for our NAS. The name of this unit **must** correspond to the destination mountpoint on-disk as per systemd requirements (which is why mine uses the `/var/home` path for my user home directory, as I'm using a Fedora Atomic derivative):
 
 ```sh
-nano "${HOME}/.config/systemd/user/var-home-user-zpools.mount"
+nano "${HOME}/.config/systemd/user/var-home-bob-zpools.mount"
 ```
 
 And here we can create a unit with very similar settings to the command line above:
@@ -136,9 +136,9 @@ Wants=network-online.target
 
 [Mount]
 What=media.infected.systems:/zpools
-Where=/var/home/user/zpools
+Where=/var/home/bob/zpools
 Type=fuse.sshfs
-Options=_netdev,reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user,IdentityFile=/var/home/user/.ssh/id_ed25519_Primary
+Options=_netdev,reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user,IdentityFile=/var/home/bob/.ssh/id_ed25519_Primary
 TimeoutSec=60
 
 [Install]
@@ -152,17 +152,15 @@ systemctl --user daemon-reload
 ```
 
 ```sh
-systemctl --user enable --now var-home-user-zpools.mount
+systemctl --user enable --now var-home-bob-zpools.mount
 ```
-
-Note that although the systemd mount _unit_ will start on boot, the actual network share may not fully mount until a process attempts to access something within the destination path, since we have specified `x-systemd.automount` in our `Options=` above.
 
 ### Mounting - Linux (NixOS systemd unit)
 For completeness' sake, I have also done the same config as above declaratively using `home-manager`'s `systemd.user.mounts` module in NixOS:
 
 ```nix
 {home-manager, ...}: {
-  home-manager.users.user = {pkgs, ...}: {
+  home-manager.users.bob = {pkgs, ...}: {
     # Mount fileserver
     # Note that this config needs to follow the capitalisation and naming
     # scheme used by systemd units
@@ -177,9 +175,9 @@ For completeness' sake, I have also done the same config as above declaratively 
         };
         Mount = {
           What = "media.infected.systems:/zpools";
-          Where = "/home/user/zpools";
+          Where = "/home/bob/zpools";
           Type = "fuse.sshfs";
-          Options = "_netdev,reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user,IdentityFile=/home/user/.ssh/id_ed25519_Primary";
+          Options = "_netdev,reconnect,ServerAliveInterval=5,ServerAliveCountMax=3,idmap=user,IdentityFile=/home/bob/.ssh/id_ed25519_Primary";
           TimeoutSec = "60";
         };
         Install = {
