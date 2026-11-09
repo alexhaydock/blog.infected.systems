@@ -76,6 +76,12 @@ if command -v apt >/dev/null 2>&1; then source /etc/os-release && if [ "$ID" = "
 mv -v /etc/apt/sources.list.d/pbs-enterprise.sources /etc/apt/sources.list.d/pbs-no-subscription.sources && sed -i 's|https://enterprise.proxmox.com/debian/pbs|http://download.proxmox.com/debian/pbs|g' /etc/apt/sources.list.d/pbs-no-subscription.sources && sed -i 's|pbs-enterprise|pbs-no-subscription|g' /etc/apt/sources.list.d/pbs-no-subscription.sources && apt update && apt --autoremove full-upgrade
 ```
 
+## Configure volatile logging for journald
+Good for reducing microSD wear on Raspberry Pis:
+```sh
+sudo sed -i 's/#Storage=auto/Storage=volatile/g' /etc/systemd/journald.conf
+```
+
 ## Fedora Silverblue - Fix broken video thumbnailing
 Grumble grumble something something software patents...
 
