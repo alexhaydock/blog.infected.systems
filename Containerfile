@@ -39,8 +39,8 @@ mkdir -p /opt/blog/public
 hugo
 EOF
 
-# Use Ubuntu 24.04 so local builds are the same as GitHub Actions builds
-FROM docker.io/library/ubuntu:24.04 as buildbase
+# Use Ubuntu 26.04 so local builds are the same as GitHub Actions builds
+FROM docker.io/library/ubuntu:26.04 as buildbase
 
 # Install deps
 RUN apt-get update && \
